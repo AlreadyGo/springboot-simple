@@ -20,8 +20,8 @@ public class Application extends WebMvcConfigurerAdapter {
         SpringApplication.run(Application.class, args);
     }
 
-    @RequestMapping("/")
-    String home() {
-        return "redirect:countries";
-    }
+//    @RequestMapping("/")
+//    String home() {
+//        return "redirect:countries";
+//    }
 }

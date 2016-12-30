@@ -40,18 +40,5 @@ public class CacheUtil {
         cache.invalidate(key);
     }
 
-    public static void main(String[] args) {
-        try {
-            cache.put("key1","value1");
-            cache.put("key2","value1");
-            cache.put("key3","value1");
-            cache.put("key4","value4");
-            System.out.println(CacheUtil.getCache("key5"));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
 }
