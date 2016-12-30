@@ -1,3 +1,6 @@
+USE `test`;
+
+DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `permission_type` tinyint(2) NOT NULL,
@@ -9,6 +12,7 @@ CREATE TABLE `permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
   `description` varchar(50) NOT NULL DEFAULT '' COMMENT 'description',
@@ -17,12 +21,14 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='role';
 
+DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission` (
   `rid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   PRIMARY KEY (`rid`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
   `password` varchar(50) NOT NULL DEFAULT '' COMMENT 'password',
@@ -36,6 +42,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `uniq_name` (`name`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='user';
 
+DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `uid` int(11) NOT NULL,
   `rid` int(11) NOT NULL,
