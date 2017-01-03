@@ -5,9 +5,9 @@
 
 <configuration>
     <typeHandlers>
-        <typeHandler javaType="tk.mybatis.springboot.model.enums.Status"
+        <typeHandler javaType="tk.springboot.simple.model.enums.Status"
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
-        <typeHandler javaType="tk.mybatis.springboot.model.enums.PermissionType"
+        <typeHandler javaType="tk.springboot.simple.model.enums.PermissionType"
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
     </typeHandlers>
 </configuration>
