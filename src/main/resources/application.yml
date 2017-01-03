@@ -37,6 +37,7 @@ spring:
         cache: false
         request-context-attribute: request
 
+<<<<<<< HEAD
 
 mybatis:
     type-aliases-package: tk.mybatis.springboot.model
@@ -53,3 +54,24 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+=======
+#以下属性不可用
+#mybatis:
+#    pagehelper:
+#        dialect: mysql
+#        reasonable: true
+#        supportMethodsArguments: true
+#        returnPageInfo: check
+#        params: count=countSql
+#    mapper:
+#        mappers: MyMapper
+#        notEmpty: true
+#        style: camelhump
+#    sqlSessionFactoryBean:
+#        mapperLocations:
+#            - classpath:mapper/*.xml
+#            - classpath:mapper2/*.xml
+#        typeAliasesPackage: tk.mybatis.springboot.model
+#    mapperScanner:
+#        basePackage: tk.mybatis.springboot.mapper
+>>>>>>> 8927f868c09713e707d37350ac50d3e4e74141fe
