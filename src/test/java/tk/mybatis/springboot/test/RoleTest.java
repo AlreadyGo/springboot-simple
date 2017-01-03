@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.springboot.Application;
 import tk.mybatis.springboot.model.Role;
 import tk.mybatis.springboot.model.User;
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-//@Transactional
+@Transactional
 @SpringApplicationConfiguration(Application.class)
 public class RoleTest {
     @Autowired

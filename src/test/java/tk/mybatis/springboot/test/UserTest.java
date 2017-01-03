@@ -24,7 +24,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-//@Transactional
+@Transactional
 @SpringApplicationConfiguration(Application.class)
 public class UserTest {
     @Autowired
