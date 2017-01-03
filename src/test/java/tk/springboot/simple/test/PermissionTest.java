@@ -6,23 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-<<<<<<< HEAD:src/test/java/tk/mybatis/springboot/test/PermissionTest.java
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.springboot.Application;
-import tk.mybatis.springboot.model.Permission;
-import tk.mybatis.springboot.model.User;
-import tk.mybatis.springboot.model.enums.PermissionType;
-import tk.mybatis.springboot.model.enums.Status;
-import tk.mybatis.springboot.service.PermissionService;
-import tk.mybatis.springboot.service.UserService;
-
-import java.util.Date;
-=======
 import tk.springboot.simple.Application;
 import tk.springboot.simple.model.Permission;
 import tk.springboot.simple.model.enums.PermissionType;
 import tk.springboot.simple.service.PermissionService;
->>>>>>> 8927f868c09713e707d37350ac50d3e4e74141fe:src/test/java/tk/springboot/simple/test/PermissionTest.java
 
 /**
  * @author zhou

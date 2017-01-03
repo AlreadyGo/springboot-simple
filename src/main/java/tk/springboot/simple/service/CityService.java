@@ -44,7 +44,7 @@ public class CityService {
 
     public List<City> getAll(City city) {
         if (city.getPage() != null && city.getRows() != null) {
-            PageHelper.startPage(city.getPage(), city.getRows(), "id");
+            PageHelper.startPage(city.getPage(), city.getRows());
         }
         return cityMapper.selectAll();
     }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import tk.mybatis.springboot.util.MyMapper;
+import tk.springboot.simple.util.MyMapper;
 
 /**
  * @author liuzh
@@ -15,7 +15,7 @@ import tk.mybatis.springboot.util.MyMapper;
 @Controller
 @EnableWebMvc
 @SpringBootApplication
-@MapperScan(basePackages = "tk.mybatis.springboot.mapper", markerInterface = MyMapper.class)
+@MapperScan(basePackages = "tk.springboot.simple.mapper", markerInterface = MyMapper.class)
 public class Application extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
