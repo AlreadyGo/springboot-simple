@@ -4,7 +4,7 @@ server:
 
 logging:
     level:
-        root: INFO
+        root: DEBUG
         tk.mybatis: TRACE
 
 spring:
