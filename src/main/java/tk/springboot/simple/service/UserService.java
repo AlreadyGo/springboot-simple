@@ -38,6 +38,7 @@ public class UserService {
 
     public void save(User user) {
         if (user.getId() != null) {
+            user.setUpdateDate(new Date());
             userMapper.updateByPrimaryKey(user);
         } else {
             user.setStatus(Status.VALID);
@@ -50,6 +51,7 @@ public class UserService {
     public int updatePasswordByName(User user){
         Example example=new Example(User.class);
         example.createCriteria().andCondition("name=",user.getName());
+        user.setUpdateDate(new Date());
         return userMapper.updateByExampleSelective(user,example);
     }
 

@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+    <properties>
+        <property name="dialect" value="mysql" />
+    </properties>
     <typeHandlers>
         <typeHandler javaType="tk.springboot.simple.model.enums.Status"
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>

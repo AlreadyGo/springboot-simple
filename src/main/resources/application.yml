@@ -4,8 +4,8 @@ server:
 
 logging:
     level:
-        root: DEBUG
-        tk.mybatis: TRACE
+        root: INFO
+        tk: DEBUG
 
 spring:
     datasource:
