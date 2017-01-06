@@ -99,6 +99,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.7</version>
         </dependency>
+        <!--通用工具-->
+        <dependency>
+            <groupId>tk</groupId>
+            <artifactId>com-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

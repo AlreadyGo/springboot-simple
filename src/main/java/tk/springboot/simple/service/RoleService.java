@@ -41,4 +41,7 @@ public class RoleService {
             roleMapper.insert(role);
         }
     }
+    public void updateStatus(Role role){
+        roleMapper.updateStatus(role);
+    }
 }

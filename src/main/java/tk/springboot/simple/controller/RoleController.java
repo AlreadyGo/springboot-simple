@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.Role;
 import tk.springboot.simple.model.RolePermission;
+import tk.springboot.simple.model.enums.Status;
 import tk.springboot.simple.model.view.DispatchView;
 import tk.springboot.simple.service.RolePermissionService;
 import tk.springboot.simple.service.RoleService;
@@ -71,6 +72,12 @@ public class RoleController {
         roleService.save(role);
         return new RespInfo(Consts.SUCCESS_CODE,role,role.getId() == null ? "创建成功" : "修改成功"
         );
+    }
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    public RespInfo updateStatus(@RequestBody Role role) {
+        String message=role.getStatus().equals(Status.VALID)?"启用成功":"禁用成功";
+        roleService.updateStatus(role);
+        return new RespInfo(Consts.SUCCESS_CODE,null,message);
     }
     @RequestMapping(value = "/dispatch", method = RequestMethod.POST)
     public RespInfo dispatch(@RequestBody DispatchView dispatchView) {

@@ -37,4 +37,6 @@ import java.util.List;
  */
 public interface UserMapper extends MyMapper<User> {
     List<Permission> pullPermissions(@Param("name") String name);
+
+    void updateStatus(User user);
 }

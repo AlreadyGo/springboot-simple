@@ -39,13 +39,17 @@ public class UserService {
     public void save(User user) {
         if (user.getId() != null) {
             user.setUpdateDate(new Date());
-            userMapper.updateByPrimaryKey(user);
+            userMapper.updateByPrimaryKeySelective(user);
         } else {
             user.setStatus(Status.VALID);
             user.setCreateDate(new Date());
             user.setLastLogin(new Date());
             userMapper.insert(user);
         }
+    }
+
+    public void updateStatus(User user){
+     userMapper.updateStatus(user);
     }
 
     public int updatePasswordByName(User user){

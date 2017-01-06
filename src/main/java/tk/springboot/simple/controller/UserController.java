@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.User;
 import tk.springboot.simple.model.UserRole;
+import tk.springboot.simple.model.enums.Status;
 import tk.springboot.simple.model.view.DispatchView;
 import tk.springboot.simple.service.UserRoleService;
 import tk.springboot.simple.service.UserService;
@@ -74,6 +75,13 @@ public class UserController {
         String msg = user.getId() == null ? "注册成功" : "修改成功";
         userService.save(user);
         return new RespInfo(Consts.SUCCESS_CODE,user,msg);
+    }
+
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    public RespInfo updateStatus(@RequestBody User user) {
+        String message=user.getStatus().equals(Status.VALID)?"启用成功":"禁用成功";
+        userService.updateStatus(user);
+        return new RespInfo(Consts.SUCCESS_CODE,null,message);
     }
 
     @RequestMapping(value = "/updatePassword/{origin}", method = RequestMethod.POST)
