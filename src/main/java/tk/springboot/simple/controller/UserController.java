@@ -39,10 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author liuzh
- * @since 2015-12-19 11:10
- */
 @RestController
 @RequestMapping("/user")
 public class UserController {

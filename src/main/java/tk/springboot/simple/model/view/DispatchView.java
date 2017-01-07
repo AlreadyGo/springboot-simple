@@ -2,11 +2,9 @@ package tk.springboot.simple.model.view;
 
 /**
  * @author zhou
- * @version V1.0
  * @Description:
  * @date 2016/12/28 17:05
- * @jdk v1.7
- * @tomcat v7.0
+ * @jdk v1.8
  */
 public class DispatchView {
     private Long id;

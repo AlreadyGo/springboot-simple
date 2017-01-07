@@ -27,10 +27,6 @@ package tk.springboot.simple.mapper;
 import tk.springboot.simple.model.Role;
 import tk.springboot.simple.util.MyMapper;
 
-/**
- * @author liuzh_3nofxnp
- * @since 2016-01-22 22:17
- */
 public interface RoleMapper extends MyMapper<Role> {
     void updateStatus(Role role);
 }

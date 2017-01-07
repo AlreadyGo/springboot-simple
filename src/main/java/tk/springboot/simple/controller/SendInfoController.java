@@ -43,10 +43,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
 
-/**
- * @author liuzh
- * @since 2015-12-19 11:10
- */
 @RestController
 @RequestMapping("/sendInfo")
 public class SendInfoController {

@@ -24,10 +24,6 @@
 
 package tk.springboot.simple.model;
 
-/**
- * @author liuzh_3nofxnp
- * @since 2016-01-22 22:16
- */
 public class City extends BaseEntity {
     private String name;
 

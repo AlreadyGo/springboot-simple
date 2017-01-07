@@ -13,11 +13,9 @@ import java.util.List;
 
 /**
  * @author zhou
- * @version V1.0
  * @Description:
  * @date 2016/12/26 15:05
- * @jdk v1.7
- * @tomcat v7.0
+ * @jdk v1.8
  */
 @Service
 public class UserService {

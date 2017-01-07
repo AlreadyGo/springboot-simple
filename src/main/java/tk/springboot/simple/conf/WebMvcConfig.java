@@ -30,10 +30,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import tk.springboot.simple.interceptors.GeneralInterceptor;
 
-/**
- * @author liuzh_3nofxnp
- * @since 2015-12-19 16:16
- */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 

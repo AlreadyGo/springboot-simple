@@ -31,10 +31,6 @@ import tk.springboot.simple.util.MyMapper;
 
 import java.util.List;
 
-/**
- * @author liuzh_3nofxnp
- * @since 2016-01-22 22:17
- */
 public interface UserMapper extends MyMapper<User> {
     List<Permission> pullPermissions(@Param("name") String name);
 

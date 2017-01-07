@@ -17,11 +17,8 @@ import java.util.List;
 
 /**
  * @author zhou
- * @version V1.0
  * @Description:
  * @date 2016/12/29 14:04
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class GeneralInterceptor extends HandlerInterceptorAdapter {
     private AntPathMatcher matcher = new AntPathMatcher();

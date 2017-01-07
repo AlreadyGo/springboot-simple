@@ -15,11 +15,9 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * @author zhou
- * @version V1.0
  * @Description:
  * @date 2016/12/29 14:39
- * @jdk v1.7
- * @tomcat v7.0
+ * @jdk v1.8
  */
 @RestController
 public class LoginController {

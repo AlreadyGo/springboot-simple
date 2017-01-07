@@ -6,11 +6,8 @@ import java.util.Date;
 
 /**
  * @author zhou
- * @version V1.0
  * @Description:
  * @date 2016/12/26 14:09
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class User  extends BaseEntity{
     private String name;

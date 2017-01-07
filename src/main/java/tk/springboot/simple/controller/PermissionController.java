@@ -33,10 +33,6 @@ import tk.springboot.simple.util.Consts;
 
 import java.util.List;
 
-/**
- * @author liuzh
- * @since 2015-12-19 11:10
- */
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
