@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import tk.springboot.simple.model.Permission;
 import tk.springboot.simple.util.CacheUtil;
@@ -43,9 +44,10 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
         return isSuccess;
     }
     private String parseUserCookie(String cookie){
-       String[] s= cookie.split(";");
-        for(String ss:s){
-            String[] sss=ss.split("=");
+        if(!StringUtils.isEmpty(cookie)){
+            String[] s= cookie.split(";");
+            for(String ss:s){
+                String[] sss=ss.split("=");
                 if("user".equals(sss[0].trim())){
                     try {
                         return URLDecoder.decode(sss[1],"utf-8");
@@ -53,6 +55,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
                         e.printStackTrace();
                     }
                 }
+            }
         }
         return null;
     }
