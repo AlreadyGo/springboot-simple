@@ -1,5 +1,7 @@
 package tk.springboot.simple.model;
 
+import java.util.Date;
+
 /**
  * @author zhou
  * @Description:
@@ -20,6 +22,24 @@ public class SendInfo extends BaseEntity{
     private String baseGoodsAddress;//客户提货地址
     private String mainLink;//主要客户联系人
     private String mainLinkWay;//主要联系方式;
+    private Date createDate;
+    private Date updateDate;
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
     public String getCode() {
         return code;

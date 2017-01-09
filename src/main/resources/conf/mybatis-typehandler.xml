@@ -12,5 +12,7 @@
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
         <typeHandler javaType="tk.springboot.simple.model.enums.PermissionType"
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+        <typeHandler javaType="tk.springboot.simple.model.enums.UploadType"
+                     handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
     </typeHandlers>
 </configuration>

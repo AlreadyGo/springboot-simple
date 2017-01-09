@@ -22,42 +22,10 @@
  * THE SOFTWARE.
  */
 
-package tk.springboot.simple.service;
+package tk.springboot.simple.mapper;
 
-import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import tk.springboot.simple.mapper.CountryMapper;
-import tk.springboot.simple.model.Country;
+import tk.springboot.simple.model.DeliveryManInfo;
+import tk.springboot.simple.util.MyMapper;
 
-import java.util.List;
-
-@Service
-public class CountryService {
-
-    @Autowired
-    private CountryMapper countryMapper;
-
-    public List<Country> getAll(Country country) {
-        if (country.getPage() != null && country.getRows() != null) {
-            PageHelper.startPage(country.getPage(), country.getRows());
-        }
-        return countryMapper.selectAll();
-    }
-
-    public Country getById(Integer id) {
-        return countryMapper.selectByPrimaryKey(id);
-    }
-
-    public void deleteById(Integer id) {
-        countryMapper.deleteByPrimaryKey(id);
-    }
-
-    public void save(Country country) {
-        if (country.getId() != null) {
-            countryMapper.updateByPrimaryKey(country);
-        } else {
-            countryMapper.insert(country);
-        }
-    }
+public interface DeliveryManInfoMapper extends MyMapper<DeliveryManInfo> {
 }

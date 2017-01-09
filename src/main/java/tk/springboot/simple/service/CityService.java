@@ -27,21 +27,23 @@ package tk.springboot.simple.service;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 import tk.springboot.simple.mapper.CityMapper;
 import tk.springboot.simple.model.City;
 
 import java.util.List;
 
-@Service
 public class CityService {
 
     @Autowired
     private CityMapper cityMapper;
 
     public List<City> getAll(City city) {
-        if (city.getPage() != null && city.getRows() != null) {
-            PageHelper.startPage(city.getPage(), city.getRows());
-        }
+//        if (city.getPage() != null && city.getRows() != null) {
+//            PageHelper.startPage(city.getPage(), city.getRows());
+//        }
+        Example example=new Example(City.class);
+        example.setOrderByClause("");
         return cityMapper.selectAll();
     }
 

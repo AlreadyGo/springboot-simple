@@ -40,11 +40,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(
-                new GeneralInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login/**","/pull/**","/user/save","/user/updatePassword/**")
-                ;
+//        registry.addInterceptor(
+//                new GeneralInterceptor())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/login/**","/pull/**","/user/save","/user/updatePassword/**")
+//                ;
     }
 //    @Override
 //    public void configureViewResolvers(ViewResolverRegistry registry) {

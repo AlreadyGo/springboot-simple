@@ -8,4 +8,6 @@ package tk.springboot.simple.util;
 public interface Consts {
     int SUCCESS_CODE=0;
     int ERROR_CODE=0;
+    String  STATUS_SUCCESS="成功";
+    String  STATUS_FAILURE="失败";
 }
