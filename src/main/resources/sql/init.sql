@@ -1,5 +1,38 @@
-USE `test`;
+/*
+MySQL Backup
+Source Server Version: 5.5.47
+Source Database: test
+Date: 2017/1/10 16:33:12
+*/
 
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+--  Table structure for `delivery_man_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `delivery_man_info`;
+CREATE TABLE `delivery_man_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(200) DEFAULT NULL,
+  `name` varchar(200) NOT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `service_scope` varchar(200) DEFAULT NULL,
+  `route_province` varchar(200) DEFAULT NULL,
+  `route_city` varchar(200) DEFAULT NULL,
+  `origin_link_way` varchar(200) DEFAULT NULL,
+  `agency_link_way` varchar(200) DEFAULT NULL,
+  `main_link` varchar(200) DEFAULT NULL,
+  `contract` varchar(200) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_code_name` (`code`,`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `permission`
+-- ----------------------------
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -10,8 +43,33 @@ CREATE TABLE `permission` (
   `description` varchar(100) DEFAULT NULL,
   `style` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+--  Table structure for `personal_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `personal_info`;
+CREATE TABLE `personal_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `route` varchar(200) DEFAULT NULL,
+  `driver_name` varchar(200) NOT NULL,
+  `car_num` varchar(200) NOT NULL,
+  `telephone_num` varchar(200) DEFAULT NULL,
+  `car_type` varchar(200) DEFAULT NULL,
+  `car_team` varchar(200) DEFAULT NULL,
+  `bank_num` varchar(200) DEFAULT NULL,
+  `order_rate` varchar(200) DEFAULT NULL,
+  `service_ability` varchar(200) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `role`
+-- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
@@ -21,6 +79,9 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='role';
 
+-- ----------------------------
+--  Table structure for `role_permission`
+-- ----------------------------
 DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission` (
   `rid` int(11) NOT NULL,
@@ -28,31 +89,13 @@ CREATE TABLE `role_permission` (
   PRIMARY KEY (`rid`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
-  `password` varchar(50) NOT NULL DEFAULT '' COMMENT 'password',
-  `email` varchar(50) NOT NULL DEFAULT '' COMMENT 'email',
-  `create_date` datetime DEFAULT NULL COMMENT 'createDate',
-  `update_date` datetime DEFAULT NULL COMMENT 'updateDate',
-  `status` tinyint(4) DEFAULT NULL COMMENT 'status',
-  `last_login` datetime DEFAULT NULL COMMENT 'more1',
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uniq_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COMMENT='user';
-
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `uid` int(11) NOT NULL,
-  `rid` int(11) NOT NULL,
-  PRIMARY KEY (`uid`,`rid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+-- ----------------------------
+--  Table structure for `send_info`
+-- ----------------------------
 DROP TABLE IF EXISTS `send_info`;
 CREATE TABLE `send_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(200) DEFAULT NULL,
+  `code` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `account_measure` varchar(200) DEFAULT NULL,
   `product_type` varchar(50) DEFAULT NULL,
@@ -66,89 +109,59 @@ CREATE TABLE `send_info` (
   `main_link` varchar(200) DEFAULT NULL,
   `main_link_way` varchar(200) DEFAULT NULL,
   `base_goods_address` varchar(200) DEFAULT NULL,
+  `create_date` datetime NOT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_name_code` (`name`,`code`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=923 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `upload_result`
+-- ----------------------------
+DROP TABLE IF EXISTS `upload_result`;
+CREATE TABLE `upload_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_date` datetime DEFAULT NULL,
+  `detail` text,
+  `upload_type` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT 'name',
+  `password` varchar(50) NOT NULL DEFAULT '' COMMENT 'password',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT 'email',
+  `create_date` datetime DEFAULT NULL COMMENT 'createDate',
+  `update_date` datetime DEFAULT NULL COMMENT 'updateDate',
+  `status` tinyint(4) DEFAULT NULL COMMENT 'status',
+  `last_login` datetime DEFAULT NULL COMMENT 'more1',
+  `id` int(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=586 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COMMENT='user';
 
+-- ----------------------------
+--  Table structure for `user_role`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `uid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  PRIMARY KEY (`uid`,`rid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-
-INSERT INTO `permission` VALUES (47, 0, 'users', '/', '用户管理', '用户管理', NULL);
-INSERT INTO `permission` VALUES (48, 1, 'users.users', '/main/users', '用户管理', '用户管理', 'glyphicon-user');
-INSERT INTO `permission` VALUES (49, 1, 'users.roles', '/main/roles', '角色管理', '角色管理', 'glyphicon-eye-open');
-INSERT INTO `permission` VALUES (50, 1, 'users.permissions', '/main/permissions', '权限管理', '权限管理', 'glyphicon-fire');
-INSERT INTO `permission` VALUES (51, 2, 'users.user.save', '/backend/user/save', '用户管理>更新/添加', '', NULL);
-INSERT INTO `permission` VALUES (52, 2, 'users.user.delete', '/backend/user/delete/**', '用户管理>删除', '', NULL);
-INSERT INTO `permission` VALUES (53, 2, 'users.user.all', '/backend/user/all', '用户管理>查看所有', '', NULL);
-INSERT INTO `permission` VALUES (54, 2, 'users.role.save', '/backend/role/save', '角色管理>更新/添加', '', NULL);
-INSERT INTO `permission` VALUES (56, 2, 'users.role.delete', '/backend/role/delete/**', '角色管理>删除', '', NULL);
-INSERT INTO `permission` VALUES (57, 2, 'users.role.all', '/backend/role/all', '角色管理>查看所有', '', NULL);
-INSERT INTO `permission` VALUES (58, 2, 'users.permission.all', '/backend/permission/all', '权限管理>查看所有', '', NULL);
-INSERT INTO `permission` VALUES (59, 2, 'users.permission.delete', '/backend/permission/delete/**', '权限管理>删除', '', NULL);
-INSERT INTO `permission` VALUES (60, 2, 'users.permission.save', '/backend/permission/save', '权限管理>更新/添加', '', NULL);
-INSERT INTO `permission` VALUES (61, 2, 'users.user.dispatch', '/backend/user/getRolesByUid/**', '用户管理>分配角色', '获取已分配角色', '');
-INSERT INTO `permission` VALUES (62, 2, 'users.role.dispatch', '/backend/role/getPermissionIdsByRid/**', '角色管理>配置权限', '配置权限', '');
-INSERT INTO `permission` VALUES (63, 2, 'users.role.dispatch', '/backend/role/dispatch', '角色管理>权限分配', '权限分配', '');
-INSERT INTO `permission` VALUES (64, 2, 'users.user.dispatch', '/backend/user/dispatch', '用户管理>分配角色', '分配角色', '');
-INSERT INTO `permission` VALUES (65, 2, 'users.user.status', '/backend/user/updateStatus', '用户管理>状态管理', '', '');
-INSERT INTO `permission` VALUES (66, 2, 'users.role.status', '/backend/role/updateStatus', '角色管理>状态管理', '', '');
-INSERT INTO `permission` VALUES (67, 0, 'customers', '/', '客户信息', '客户信息管理', '');
-INSERT INTO `permission` VALUES (68, 0, 'orders', '/', '订单信息管理', '订单信息管理', '');
-INSERT INTO `permission` VALUES (69, 0, 'accounts', '/', '结算信息管理', '结算信息管理', '');
-INSERT INTO `permission` VALUES (70, 0, 'cost', '/', '成本信息管理', '成本信息管理', '');
-INSERT INTO `permission` VALUES (71, 0, 'fundsApp', '/', '资金申请管理', '资金申请管理', '');
-INSERT INTO `permission` VALUES (72, 0, 'fundsSum', '/', '资金统计管理', '资金统计管理', '');
-INSERT INTO `permission` VALUES (73, 0, 'reports', '/', '报表管理', '报表管理', '');
-INSERT INTO `permission` VALUES (74, 1, 'customers.sendInfo', '/main/customers/sendInfo', '客户信息管理>发货方信息', '发货方信息', 'glyphicon-list-alt');
-INSERT INTO `permission` VALUES (76, 1, 'customers.deliveryManInfo', '/main/customers/deliveryManInfo', '客户信息管理>承运商信息', '承运商信息', 'glyphicon-list-alt');
-INSERT INTO `permission` VALUES (77, 1, 'customers.personalInfo', '/main/customers/personalInfo', '客户信息管理>个体商户信息', '个体商户信息', 'glyphicon-list-alt');
-INSERT INTO `role` VALUES ('管理员', '管理员', 11, 0);
-INSERT INTO `role` VALUES ('操作员1', '操作员1', 12, 0);
-INSERT INTO `role` VALUES ('操作员2', '操作员2', 17, 0);
-INSERT INTO `role_permission` VALUES (11, 47);
-INSERT INTO `role_permission` VALUES (11, 48);
-INSERT INTO `role_permission` VALUES (11, 49);
-INSERT INTO `role_permission` VALUES (11, 50);
-INSERT INTO `role_permission` VALUES (11, 51);
-INSERT INTO `role_permission` VALUES (11, 52);
-INSERT INTO `role_permission` VALUES (11, 53);
-INSERT INTO `role_permission` VALUES (11, 54);
-INSERT INTO `role_permission` VALUES (11, 56);
-INSERT INTO `role_permission` VALUES (11, 57);
-INSERT INTO `role_permission` VALUES (11, 58);
-INSERT INTO `role_permission` VALUES (11, 59);
-INSERT INTO `role_permission` VALUES (11, 60);
-INSERT INTO `role_permission` VALUES (11, 61);
-INSERT INTO `role_permission` VALUES (11, 62);
-INSERT INTO `role_permission` VALUES (11, 63);
-INSERT INTO `role_permission` VALUES (11, 64);
-INSERT INTO `role_permission` VALUES (11, 65);
-INSERT INTO `role_permission` VALUES (11, 66);
-INSERT INTO `role_permission` VALUES (11, 67);
-INSERT INTO `role_permission` VALUES (11, 68);
-INSERT INTO `role_permission` VALUES (11, 69);
-INSERT INTO `role_permission` VALUES (11, 70);
-INSERT INTO `role_permission` VALUES (11, 71);
-INSERT INTO `role_permission` VALUES (11, 72);
-INSERT INTO `role_permission` VALUES (11, 73);
-INSERT INTO `role_permission` VALUES (11, 74);
-INSERT INTO `role_permission` VALUES (11, 75);
-INSERT INTO `role_permission` VALUES (11, 76);
-INSERT INTO `role_permission` VALUES (11, 77);
-INSERT INTO `role_permission` VALUES (12, 47);
-INSERT INTO `role_permission` VALUES (12, 48);
-INSERT INTO `role_permission` VALUES (12, 51);
-INSERT INTO `role_permission` VALUES (16, 57);
-INSERT INTO `role_permission` VALUES (17, 47);
-INSERT INTO `role_permission` VALUES (17, 49);
-INSERT INTO `user` VALUES ('admin', '123456', 'admin@163.com', '2016-12-28 15:16:00', '2017-1-5 14:23:26', 0, '2016-12-28 15:16:00', 27);
-INSERT INTO `user` VALUES ('张三', '123456', 'zhangsan@163.com', '2016-12-29 17:30:20', NULL, 0, '2016-12-29 17:30:20', 28);
-INSERT INTO `user` VALUES ('李四', '123456', 'lisi@163.com', '2016-12-29 17:32:55', NULL, 0, '2016-12-29 17:32:55', 29);
-INSERT INTO `user` VALUES ('王五', '5', 'wangwu@163.com', '2016-12-29 17:34:53', NULL, 0, '2016-12-29 17:34:53', 31);
-INSERT INTO `user` VALUES ('小哥哥', '123123', 'xgg@163.sss', '2017-1-3 14:45:15', NULL, 0, '2017-1-3 14:45:15', 32);
-INSERT INTO `user` VALUES ('大兄弟', '123456', '1@11', '2017-1-4 13:45:27', '2017-1-4 14:28:44', 1, '2017-1-4 13:45:27', 33);
-INSERT INTO `user_role` VALUES (27, 11);
-INSERT INTO `user_role` VALUES (28, 12);
-INSERT INTO `user_role` VALUES (31, 17);
-
+-- ----------------------------
+--  Records
+-- ----------------------------
+INSERT INTO `delivery_man_info` VALUES ('3','JX001','若天国际','嘉定区宝安公路','四川、重庆公路运输','四川、重庆','全境','1.关亚59992371/18201854989/3243368979@QQ.COM','成都：杨丽君028-83026465、刘经理15928102170，17713595319             重庆：王乃非18223036088','总经理：许广13501894999','月结','否','2017-01-10 16:16:34','2017-01-10 16:16:34'), ('4','JX002','跃龙物流','嘉定区','铁路运输&安徽公司运输','铁路运输','全国','1.李丹 13122039388','','总经理：李丹 13122039388','回结','否','2017-01-10 16:16:34','2017-01-10 16:16:34');
+INSERT INTO `permission` VALUES ('47','0','users','/','用户管理','用户管理',NULL), ('48','1','users.users','/main/users','用户管理','用户管理','glyphicon-user'), ('49','1','users.roles','/main/roles','角色管理','角色管理','glyphicon-eye-open'), ('50','1','users.permissions','/main/permissions','权限管理','权限管理','glyphicon-fire'), ('51','2','users.user.save','/backend/user/save','用户管理>更新/添加','',NULL), ('52','2','users.user.delete','/backend/user/delete/**','用户管理>删除','',NULL), ('53','2','users.user.all','/backend/user/all','用户管理>查看所有','',NULL), ('54','2','users.role.save','/backend/role/save','角色管理>更新/添加','',NULL), ('56','2','users.role.delete','/backend/role/delete/**','角色管理>删除','',NULL), ('57','2','users.role.all','/backend/role/all','角色管理>查看所有','',NULL), ('58','2','users.permission.all','/backend/permission/all','权限管理>查看所有','',NULL), ('59','2','users.permission.delete','/backend/permission/delete/**','权限管理>删除','',NULL), ('60','2','users.permission.save','/backend/permission/save','权限管理>更新/添加','',NULL), ('61','2','users.user.dispatch','/backend/user/getRolesByUid/**','用户管理>分配角色','获取已分配角色',''), ('62','2','users.role.dispatch','/backend/role/getPermissionIdsByRid/**','角色管理>配置权限','配置权限',''), ('63','2','users.role.dispatch','/backend/role/dispatch','角色管理>权限分配','权限分配',''), ('64','2','users.user.dispatch','/backend/user/dispatch','用户管理>分配角色','分配角色',''), ('65','2','users.user.status','/backend/user/updateStatus','用户管理>状态管理','',''), ('66','2','users.role.status','/backend/role/updateStatus','角色管理>状态管理','',''), ('67','0','customers','/','客户信息','客户信息管理',''), ('68','0','orders','/','订单信息管理','订单信息管理',''), ('69','0','accounts','/','结算信息管理','结算信息管理',''), ('70','0','cost','/','成本信息管理','成本信息管理',''), ('71','0','fundsApp','/','资金申请管理','资金申请管理',''), ('72','0','fundsSum','/','资金统计管理','资金统计管理',''), ('73','0','reports','/','报表管理','报表管理',''), ('74','1','customers.sendInfo','/main/customers/sendInfo','客户信息管理>发货方信息','发货方信息','glyphicon-list-alt'), ('76','1','customers.deliveryManInfo','/main/customers/deliveryManInfo','客户信息管理>承运商信息','承运商信息','glyphicon-list-alt'), ('77','1','customers.personalInfo','/main/customers/personalInfo','客户信息管理>个体商户信息','个体商户信息','glyphicon-list-alt');
+INSERT INTO `personal_info` VALUES ('12',NULL,'1.0','衢州','王','7277.0','7277.0','7277.0','7277.0','7277.0','7277.0','7277.0','2017-01-10 16:13:37','2017-01-10 16:13:37'), ('13',NULL,'2.0','衢州','王','7660.0','7660.0','7660.0','7660.0','7660.0','7660.0','7660.0','2017-01-10 16:13:37','2017-01-10 16:13:37'), ('14',NULL,'3.0','衢州','游国中','豫PZ7323','豫PZ7323','豫PZ7323','豫PZ7323','豫PZ7323','豫PZ7323','豫PZ7323','2017-01-10 16:13:37','2017-01-10 16:13:37');
+INSERT INTO `role` VALUES ('管理员','管理员','11','0'), ('操作员1','操作员1','12','0'), ('操作员2','操作员2','17','0');
+INSERT INTO `role_permission` VALUES ('11','47'), ('11','48'), ('11','49'), ('11','50'), ('11','51'), ('11','52'), ('11','53'), ('11','54'), ('11','56'), ('11','57'), ('11','58'), ('11','59'), ('11','60'), ('11','61'), ('11','62'), ('11','63'), ('11','64'), ('11','65'), ('11','66'), ('11','67'), ('11','68'), ('11','69'), ('11','70'), ('11','71'), ('11','72'), ('11','73'), ('11','74'), ('11','75'), ('11','76'), ('11','77'), ('12','47'), ('12','48'), ('12','51'), ('16','57'), ('17','47'), ('17','49');
+INSERT INTO `upload_result` VALUES ('38','2017-01-09 17:08:15','[{\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"id\":860,\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1483952895043,\"status\":\"成功\"},{\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"id\":861,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1483952895104,\"status\":\"成功\"},{\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"id\":862,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1483952895123,\"status\":\"成功\"},{\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"id\":863,\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1483952895135,\"status\":\"成功\"},{\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"id\":864,\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1483952895148,\"status\":\"成功\"},{\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"id\":865,\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1483952895161,\"status\":\"成功\"},{\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"id\":866,\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1483952895185,\"status\":\"成功\"},{\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"id\":867,\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1483952895204,\"status\":\"成功\"},{\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"id\":868,\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1483952895272,\"status\":\"成功\"}]','0'), ('39','2017-01-09 17:12:20','[{\"updateDate\":1483953140584,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"id\":869,\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1483953140584,\"status\":\"成功\"},{\"updateDate\":1483953140779,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"id\":870,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1483953140779,\"status\":\"成功\"},{\"updateDate\":1483953140820,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"id\":871,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1483953140820,\"status\":\"成功\"},{\"updateDate\":1483953140841,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"id\":872,\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1483953140841,\"status\":\"成功\"},{\"updateDate\":1483953140862,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"id\":873,\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1483953140862,\"status\":\"成功\"},{\"updateDate\":1483953140876,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"id\":874,\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1483953140876,\"status\":\"成功\"},{\"updateDate\":1483953140947,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"id\":875,\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1483953140947,\"status\":\"成功\"},{\"updateDate\":1483953140959,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"id\":876,\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1483953140959,\"status\":\"成功\"},{\"updateDate\":1483953140973,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"id\":877,\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1483953140973,\"status\":\"成功\"}]','0'), ('40','2017-01-10 10:27:16','[{\"updateDate\":1484015236024,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"id\":878,\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1484015236024,\"status\":\"成功\"},{\"updateDate\":1484015236057,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484015236057,\"status\":\"失败\"},{\"updateDate\":1484015236114,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484015236114,\"status\":\"失败\"},{\"updateDate\":1484015236125,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1484015236125,\"status\":\"失败\"},{\"updateDate\":1484015236139,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1484015236139,\"status\":\"失败\"},{\"updateDate\":1484015236151,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1484015236151,\"status\":\"失败\"},{\"updateDate\":1484015236165,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1484015236165,\"status\":\"失败\"},{\"updateDate\":1484015236177,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1484015236177,\"status\":\"失败\"},{\"updateDate\":1484015236191,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1484015236191,\"status\":\"失败\"}]','0'), ('41','2017-01-10 11:17:36','[{\"updateDate\":1484018256367,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1484018256367,\"status\":\"失败\"},{\"updateDate\":1484018256443,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256443,\"status\":\"失败\"},{\"updateDate\":1484018256466,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256466,\"status\":\"失败\"},{\"updateDate\":1484018256528,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1484018256528,\"status\":\"失败\"},{\"updateDate\":1484018256558,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1484018256558,\"status\":\"失败\"},{\"updateDate\":1484018256584,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1484018256584,\"status\":\"失败\"},{\"updateDate\":1484018256609,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1484018256609,\"status\":\"失败\"},{\"updateDate\":1484018256635,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1484018256635,\"status\":\"失败\"},{\"updateDate\":1484018256667,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1484018256667,\"status\":\"失败\"}]','0'), ('42','2017-01-10 11:17:36','[{\"updateDate\":1484018256366,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1484018256366,\"status\":\"失败\"},{\"updateDate\":1484018256439,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"id\":890,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256439,\"status\":\"成功\"},{\"updateDate\":1484018256457,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256457,\"status\":\"失败\"},{\"updateDate\":1484018256479,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1484018256479,\"status\":\"失败\"},{\"updateDate\":1484018256540,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1484018256540,\"status\":\"失败\"},{\"updateDate\":1484018256571,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1484018256571,\"status\":\"失败\"},{\"updateDate\":1484018256599,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1484018256599,\"status\":\"失败\"},{\"updateDate\":1484018256621,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1484018256621,\"status\":\"失败\"},{\"updateDate\":1484018256654,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1484018256654,\"status\":\"失败\"}]','0'), ('43','2017-01-10 11:17:36','[{\"updateDate\":1484018256367,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1484018256367,\"status\":\"失败\"},{\"updateDate\":1484018256439,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256439,\"status\":\"失败\"},{\"updateDate\":1484018256466,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484018256466,\"status\":\"失败\"},{\"updateDate\":1484018256527,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1484018256527,\"status\":\"失败\"},{\"updateDate\":1484018256558,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1484018256558,\"status\":\"失败\"},{\"updateDate\":1484018256583,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1484018256583,\"status\":\"失败\"},{\"updateDate\":1484018256609,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1484018256609,\"status\":\"失败\"},{\"updateDate\":1484018256639,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1484018256639,\"status\":\"失败\"},{\"updateDate\":1484018256667,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1484018256667,\"status\":\"失败\"}]','0'), ('44','2017-01-10 11:24:02','[{\"routeCity\":\"全境\",\"updateDate\":1484018642769,\"address\":\"嘉定区宝安公路\",\"agencyLinkWay\":\"成都：杨丽君028-83026465、刘经理15928102170，17713595319             重庆：王乃非18223036088\",\"code\":\"JX001\",\"contract\":\"月结\",\"mainLink\":\"总经理：许广13501894999\",\"description\":\"否\",\"originLinkWay\":\"1.关亚59992371/18201854989/3243368979@QQ.COM\",\"routeProvince\":\"四川、重庆\",\"name\":\"若天国际\",\"serviceScope\":\"四川、重庆公路运输\",\"id\":1,\"createDate\":1484018642769,\"status\":\"成功\"},{\"routeCity\":\"全国\",\"updateDate\":1484018642853,\"address\":\"嘉定区\",\"agencyLinkWay\":\"\",\"code\":\"JX002\",\"contract\":\"回结\",\"mainLink\":\"总经理：李丹 13122039388\",\"description\":\"否\",\"originLinkWay\":\"1.李丹 13122039388\",\"routeProvince\":\"铁路运输\",\"name\":\"跃龙物流\",\"serviceScope\":\"铁路运输&安徽公司运输\",\"id\":2,\"createDate\":1484018642853,\"status\":\"成功\"}]','1'), ('45','2017-01-10 14:49:24','[{\"bankNum\":\"7277.0\",\"updateDate\":1484030964642,\"address\":\"7277.0\",\"serviceAbility\":\"7277.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7277.0\",\"orderRate\":\"7277.0\",\"carTeam\":\"7277.0\",\"carType\":\"7277.0\",\"driverName\":\"1.0\",\"id\":1,\"createDate\":1484030964642,\"status\":\"成功\"},{\"bankNum\":\"7660.0\",\"updateDate\":1484030964671,\"address\":\"7660.0\",\"serviceAbility\":\"7660.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7660.0\",\"orderRate\":\"7660.0\",\"carTeam\":\"7660.0\",\"carType\":\"7660.0\",\"driverName\":\"2.0\",\"id\":2,\"createDate\":1484030964671,\"status\":\"成功\"},{\"bankNum\":\"豫PZ7323\",\"updateDate\":1484030964687,\"address\":\"豫PZ7323\",\"serviceAbility\":\"豫PZ7323\",\"telephoneNum\":\"游国中\",\"carNum\":\"衢州\",\"description\":\"豫PZ7323\",\"orderRate\":\"豫PZ7323\",\"carTeam\":\"豫PZ7323\",\"carType\":\"豫PZ7323\",\"driverName\":\"3.0\",\"id\":3,\"createDate\":1484030964687,\"status\":\"成功\"}]','2'), ('46','2017-01-10 14:49:30','[{\"bankNum\":\"7277.0\",\"updateDate\":1484030970440,\"address\":\"7277.0\",\"serviceAbility\":\"7277.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7277.0\",\"orderRate\":\"7277.0\",\"carTeam\":\"7277.0\",\"carType\":\"7277.0\",\"driverName\":\"1.0\",\"id\":4,\"createDate\":1484030970440,\"status\":\"成功\"},{\"bankNum\":\"7660.0\",\"updateDate\":1484030970469,\"address\":\"7660.0\",\"serviceAbility\":\"7660.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7660.0\",\"orderRate\":\"7660.0\",\"carTeam\":\"7660.0\",\"carType\":\"7660.0\",\"driverName\":\"2.0\",\"id\":5,\"createDate\":1484030970469,\"status\":\"成功\"},{\"bankNum\":\"豫PZ7323\",\"updateDate\":1484030970491,\"address\":\"豫PZ7323\",\"serviceAbility\":\"豫PZ7323\",\"telephoneNum\":\"游国中\",\"carNum\":\"衢州\",\"description\":\"豫PZ7323\",\"orderRate\":\"豫PZ7323\",\"carTeam\":\"豫PZ7323\",\"carType\":\"豫PZ7323\",\"driverName\":\"3.0\",\"id\":6,\"createDate\":1484030970491,\"status\":\"成功\"}]','2'), ('47','2017-01-10 14:59:19','[{\"bankNum\":\"7277.0\",\"updateDate\":1484031559650,\"address\":\"7277.0\",\"serviceAbility\":\"7277.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7277.0\",\"orderRate\":\"7277.0\",\"carTeam\":\"7277.0\",\"carType\":\"7277.0\",\"driverName\":\"1.0\",\"id\":9,\"createDate\":1484031559650,\"status\":\"成功\"},{\"bankNum\":\"7660.0\",\"updateDate\":1484031559918,\"address\":\"7660.0\",\"serviceAbility\":\"7660.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7660.0\",\"orderRate\":\"7660.0\",\"carTeam\":\"7660.0\",\"carType\":\"7660.0\",\"driverName\":\"2.0\",\"id\":10,\"createDate\":1484031559918,\"status\":\"成功\"},{\"bankNum\":\"豫PZ7323\",\"updateDate\":1484031559937,\"address\":\"豫PZ7323\",\"serviceAbility\":\"豫PZ7323\",\"telephoneNum\":\"游国中\",\"carNum\":\"衢州\",\"description\":\"豫PZ7323\",\"orderRate\":\"豫PZ7323\",\"carTeam\":\"豫PZ7323\",\"carType\":\"豫PZ7323\",\"driverName\":\"3.0\",\"id\":11,\"createDate\":1484031559937,\"status\":\"成功\"}]','2'), ('48','2017-01-10 16:13:37','[{\"bankNum\":\"7277.0\",\"updateDate\":1484036017233,\"address\":\"7277.0\",\"serviceAbility\":\"7277.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7277.0\",\"orderRate\":\"7277.0\",\"carTeam\":\"7277.0\",\"carType\":\"7277.0\",\"driverName\":\"1.0\",\"id\":12,\"createDate\":1484036017233,\"status\":\"成功\"},{\"bankNum\":\"7660.0\",\"updateDate\":1484036017420,\"address\":\"7660.0\",\"serviceAbility\":\"7660.0\",\"telephoneNum\":\"王\",\"carNum\":\"衢州\",\"description\":\"7660.0\",\"orderRate\":\"7660.0\",\"carTeam\":\"7660.0\",\"carType\":\"7660.0\",\"driverName\":\"2.0\",\"id\":13,\"createDate\":1484036017420,\"status\":\"成功\"},{\"bankNum\":\"豫PZ7323\",\"updateDate\":1484036017460,\"address\":\"豫PZ7323\",\"serviceAbility\":\"豫PZ7323\",\"telephoneNum\":\"游国中\",\"carNum\":\"衢州\",\"description\":\"豫PZ7323\",\"orderRate\":\"豫PZ7323\",\"carTeam\":\"豫PZ7323\",\"carType\":\"豫PZ7323\",\"driverName\":\"3.0\",\"id\":14,\"createDate\":1484036017460,\"status\":\"成功\"}]','2'), ('49','2017-01-10 16:16:34','[{\"routeCity\":\"全境\",\"updateDate\":1484036194242,\"address\":\"嘉定区宝安公路\",\"agencyLinkWay\":\"成都：杨丽君028-83026465、刘经理15928102170，17713595319             重庆：王乃非18223036088\",\"code\":\"JX001\",\"contract\":\"月结\",\"mainLink\":\"总经理：许广13501894999\",\"description\":\"否\",\"originLinkWay\":\"1.关亚59992371/18201854989/3243368979@QQ.COM\",\"routeProvince\":\"四川、重庆\",\"name\":\"若天国际\",\"serviceScope\":\"四川、重庆公路运输\",\"id\":3,\"createDate\":1484036194242,\"status\":\"成功\"},{\"routeCity\":\"全国\",\"updateDate\":1484036194266,\"address\":\"嘉定区\",\"agencyLinkWay\":\"\",\"code\":\"JX002\",\"contract\":\"回结\",\"mainLink\":\"总经理：李丹 13122039388\",\"description\":\"否\",\"originLinkWay\":\"1.李丹 13122039388\",\"routeProvince\":\"铁路运输\",\"name\":\"跃龙物流\",\"serviceScope\":\"铁路运输&安徽公司运输\",\"id\":4,\"createDate\":1484036194266,\"status\":\"成功\"}]','1'), ('50','2017-01-10 16:16:38','[{\"updateDate\":1484036198091,\"bizDesc\":\"上海发北京/深圳，山东\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海市青浦工业园新技路777号\",\"baseLink\":\"张根峰（物流主管）\",\"goodsType\":\"重货/泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商/代加工\",\"name\":\"声科\",\"id\":914,\"productType\":\"垃圾袋/包材\",\"baseLinkWay\":\"TEL:59703531/13918138682\",\"createDate\":1484036198091,\"status\":\"成功\"},{\"updateDate\":1484036198127,\"bizDesc\":\"上海发温州/武汉/义乌\",\"bizType\":\"仓储+运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"徐维18665561281/周新翠17717082916\",\"goodsType\":\"重泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库\",\"name\":\"美馨\",\"id\":915,\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484036198127,\"status\":\"成功\"},{\"updateDate\":1484036198141,\"bizDesc\":\"上海发全国各地\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"上海松江天马沈砖公路3129弄5号楼/松江大港镇昆港公路1088号\",\"baseLink\":\"各销售助理\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/门店\",\"name\":\"苏州约瑟夫\",\"productType\":\"湿巾\",\"baseLinkWay\":\"\",\"createDate\":1484036198141,\"status\":\"失败\"},{\"updateDate\":1484036198197,\"bizDesc\":\"上海发江浙常温牛奶和冷藏整车运输\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"松江九亭涞亭南路90号/上海市青浦区胜利路399号 张磊15202198400\",\"baseLink\":\"吴群群021-60705215/18501751542\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"经销商仓库/商超\",\"name\":\"上海樵泉\",\"productType\":\"韩国牛奶\",\"baseLinkWay\":\"张经理：13901989184仓库张主管13621972321\",\"createDate\":1484036198197,\"status\":\"失败\"},{\"updateDate\":1484036198216,\"bizDesc\":\"铁路运输\",\"bizType\":\"铁路运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"浦东高东路118号/浦东仓库\",\"baseLink\":\"徐斌18918991416\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"益海嘉里\",\"productType\":\"金龙鱼油\",\"baseLinkWay\":\"\",\"createDate\":1484036198216,\"status\":\"失败\"},{\"updateDate\":1484036198228,\"bizDesc\":\"豆浆份发全国\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"高东路118号4号门\",\"baseLink\":\"郑先生18952568653\",\"goodsType\":\"重货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"南京中外运\",\"productType\":\"金龙鱼豆浆粉\",\"baseLinkWay\":\"中外运陶先生15850679338\",\"createDate\":1484036198228,\"status\":\"失败\"},{\"updateDate\":1484036198242,\"bizDesc\":\"蚌埠\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"个\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"天马天宅路156号\",\"baseLink\":\"朱军堂 \",\"goodsType\":\"泡货\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天马汪老板\",\"productType\":\"泡沫板\",\"baseLinkWay\":\"13909622769\",\"createDate\":1484036198242,\"status\":\"失败\"},{\"updateDate\":1484036198255,\"bizDesc\":\"\",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"\",\"baseLink\":\"\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"佰皆百食品\",\"productType\":\"食品\",\"baseLinkWay\":\"\",\"createDate\":1484036198255,\"status\":\"失败\"},{\"updateDate\":1484036198268,\"bizDesc\":\"东莞 \",\"bizType\":\"运输\",\"code\":\"\",\"mainLink\":\"\",\"swapType\":\"托盘/箱\",\"accountMeasure\":\"\",\"baseGoodsAddress\":\"东莞寮步镇华南工业城\",\"baseLink\":\"黄延玲\",\"goodsType\":\"\",\"mainLinkWay\":\"\",\"receiverType\":\"\",\"name\":\"天孚真空\",\"productType\":\"机械软管\",\"baseLinkWay\":\"13559726641/0769-83226777/0769-83221603\",\"createDate\":1484036198268,\"status\":\"失败\"}]','0');
+INSERT INTO `user` VALUES ('admin','123456','admin@163.com','2016-12-28 15:16:00','2017-01-05 14:23:26','0','2016-12-28 15:16:00','27'), ('张三','123456','zhangsan@163.com','2016-12-29 17:30:20',NULL,'0','2016-12-29 17:30:20','28'), ('李四','123456','lisi@163.com','2016-12-29 17:32:55',NULL,'0','2016-12-29 17:32:55','29'), ('王五','5','wangwu@163.com','2016-12-29 17:34:53',NULL,'0','2016-12-29 17:34:53','31'), ('小哥哥','123123','xgg@163.sss','2017-01-03 14:45:15',NULL,'0','2017-01-03 14:45:15','32'), ('大兄弟','123456','1@11','2017-01-04 13:45:27','2017-01-04 14:28:44','0','2017-01-04 13:45:27','33');
+INSERT INTO `user_role` VALUES ('27','11'), ('28','12'), ('31','17');

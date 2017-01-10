@@ -14,12 +14,14 @@ import java.util.List;
  * @date 2016/12/26 15:05
  */
 @Service
-public class DeliveryManInfoService {
+public class DeliveryManInfoService extends BaseService{
     @Autowired
     private DeliveryManInfoMapper deliveryManInfoMapper;
 
     public List<DeliveryManInfo> getAll(DeliveryManInfo deliveryManInfo) {
-        return deliveryManInfoMapper.selectAll();
+        String sort=deliveryManInfo.getSort(),order=deliveryManInfo.getOrder();
+        Integer dateRange=deliveryManInfo.getDateRange();
+        return deliveryManInfoMapper.selectByExample(createDateRangeExample(DeliveryManInfo.class,order,sort,dateRange));
     }
 
     public DeliveryManInfo getById(Integer id) {

@@ -17,7 +17,7 @@ public class BeanUtil {
     public static void main(String[] args) {
 
 
-        System.out.println(genCreateTableSql("tk.springboot.simple.model.DeliveryManInfo"));
+        System.out.println(genCreateTableSql("tk.springboot.simple.model.PersonalInfo"));
 
     }
 
@@ -87,7 +87,7 @@ public class BeanUtil {
                     if (propertys[0].equals("int")) {
                         sb.append("   " + field + " int(11) '',\n");
                     } else if (propertys[0].equals("String")) {
-                        sb.append("   " + field + " varchar(2000) ,\n");
+                        sb.append("   " + field + " varchar(200) ,\n");
                     } else if (propertys[0].equals("double")) {
                         sb.append("   " + field + " double(10,2) ,\n");
                     } else if (propertys[0].equals("Date")) {

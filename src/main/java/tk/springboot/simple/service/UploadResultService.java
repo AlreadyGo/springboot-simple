@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.springboot.simple.mapper.UploadResultMapper;
 import tk.springboot.simple.model.UploadResult;
-import tk.springboot.simple.model.enums.UploadType;
 
 import java.util.List;
 
@@ -16,11 +15,12 @@ import java.util.List;
  * @jdk v1.8
  */
 @Service
-public class UploadResultService {
+public class UploadResultService extends BaseService{
     @Autowired
     private UploadResultMapper uploadResultMapper;
 
     public List<UploadResult> getAll(UploadResult uploadResult) {
+
         return uploadResultMapper.selectAll();
     }
 
@@ -28,9 +28,10 @@ public class UploadResultService {
         return uploadResultMapper.selectByPrimaryKey(id);
     }
 
-    public List<UploadResult> getByType(UploadType uploadType) {
-        Example example=new Example(UploadResult.class);
-        example.createCriteria().andCondition("upload_type=",uploadType.ordinal());
+    public List<UploadResult> getByType(UploadResult uploadResult) {
+        String sort=uploadResult.getSort(),order=uploadResult.getOrder();
+        Integer dateRange=uploadResult.getDateRange();
+        Example example=createDateRangeExample(UploadResult.class,order,sort,dateRange,"upload_type="+uploadResult.getUploadType().ordinal());
         return uploadResultMapper.selectByExample(example);
     }
 

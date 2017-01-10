@@ -19,6 +19,7 @@ import tk.springboot.simple.util.Consts;
 import tk.springboot.simple.util.UploadExcelRules;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
 @RequestMapping("/deliveryManInfo")
-public class DeliveryManInfoController {
+public class DeliveryManInfoController extends BaseController {
 
     @Autowired
     private DeliveryManInfoService deliveryManInfoService;
@@ -60,38 +61,34 @@ public class DeliveryManInfoController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public RespInfo upload(HttpServletRequest request) {
+    public RespInfo upload(HttpServletRequest request) throws Exception {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
         JSONArray jsonArray=new JSONArray();
         boolean isPartFailed=false;
         for(UploadFile file:files){
-            try {
-                String originalName=file.getOriginalFilename();
-                List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
-                List<DeliveryManInfo> deliveryManInfos=UploadExcelRules.parseDeliveryManInfos(sheetBeans);
-                if(deliveryManInfos.size()>0){
-                    for(DeliveryManInfo deliveryManInfo:deliveryManInfos){
-                        String status;
-                        try{
-                            deliveryManInfoService.save(deliveryManInfo);
-                            status=STATUS_SUCCESS;
-                        } catch (Exception ex){
-                            status=STATUS_FAILURE;
-                            if(!isPartFailed){
-                                isPartFailed=true;
-                                respInfo.setMessage("部分上传失败");
-                            }
-                        }
-                        saveUploadResult(jsonArray,deliveryManInfo,status);
-                    }
-                }else{
-                    respInfo.setStatus(Consts.ERROR_CODE);
-                    respInfo.setMessage("上传失败");
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+           String originalName=file.getOriginalFilename();
+           List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
+           List<DeliveryManInfo> deliveryManInfos=UploadExcelRules.parseDeliveryManInfos(sheetBeans);
+           if(deliveryManInfos.size()>0){
+               for(DeliveryManInfo deliveryManInfo:deliveryManInfos){
+                   String status;
+                   try{
+                       deliveryManInfoService.save(deliveryManInfo);
+                       status=STATUS_SUCCESS;
+                   } catch (Exception ex){
+                       status=STATUS_FAILURE;
+                       if(!isPartFailed){
+                           isPartFailed=true;
+                           respInfo.setMessage("部分上传失败");
+                           respInfo.setStatus(Consts.ERROR_CODE);
+                       }
+                   }
+                   saveUploadResult(jsonArray,deliveryManInfo,status);
+               }
+           }else{
+               throw new Exception("上传失败");
+           }
         }
         if(jsonArray.size()>0){
             uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.DELIVERYMANINFO));

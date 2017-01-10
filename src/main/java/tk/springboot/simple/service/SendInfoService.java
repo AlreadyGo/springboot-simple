@@ -1,9 +1,7 @@
 package tk.springboot.simple.service;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.springboot.simple.mapper.SendInfoMapper;
 import tk.springboot.simple.model.SendInfo;
 
@@ -16,18 +14,14 @@ import java.util.List;
  * @date 2016/12/26 15:05
  */
 @Service
-public class SendInfoService {
+public class SendInfoService extends BaseService{
     @Autowired
     private SendInfoMapper sendInfoMapper;
 
     public List<SendInfo> getAll(SendInfo sendInfo) {
-        if (sendInfo.getLimit() != null && sendInfo.getOffset() != null) {
-            PageHelper.startPage(sendInfo.getOffset(), sendInfo.getLimit());
-        }
-        Example example=new Example(SendInfo.class);
-        StringBuffer stringBuffer=new StringBuffer("order by ");
-        example.setOrderByClause(stringBuffer.append(sendInfo.getSort()).append(" ").append(sendInfo.getOrder()).toString());
-        return sendInfoMapper.selectByExample(example);
+        String sort=sendInfo.getSort(),order=sendInfo.getOrder();
+        Integer dateRange=sendInfo.getDateRange();
+        return sendInfoMapper.selectByExample(createDateRangeExample(SendInfo.class,order,sort,dateRange));
     }
 
     public int getCount(SendInfo sendInfo){

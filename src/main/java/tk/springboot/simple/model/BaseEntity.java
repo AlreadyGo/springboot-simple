@@ -44,6 +44,17 @@ public class BaseEntity {
     @Transient
     private String order;
 
+    @Transient
+    private Integer dateRange;
+
+    public Integer getDateRange() {
+        return dateRange;
+    }
+
+    public void setDateRange(Integer dateRange) {
+        this.dateRange = dateRange;
+    }
+
     public Integer getId() {
         return id;
     }

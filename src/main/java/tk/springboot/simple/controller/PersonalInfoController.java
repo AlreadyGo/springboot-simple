@@ -1,4 +1,3 @@
-
 package tk.springboot.simple.controller;
 
 import com.alibaba.fastjson.JSON;
@@ -10,11 +9,11 @@ import tk.comm.model.SheetBean;
 import tk.comm.model.UploadFile;
 import tk.comm.utils.DownUploadUtil;
 import tk.comm.utils.ExcelUtil;
-import tk.springboot.simple.model.SendInfo;
+import tk.springboot.simple.model.PersonalInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.UploadResult;
 import tk.springboot.simple.model.enums.UploadType;
-import tk.springboot.simple.service.SendInfoService;
+import tk.springboot.simple.service.PersonalInfoService;
 import tk.springboot.simple.service.UploadResultService;
 import tk.springboot.simple.util.Consts;
 import tk.springboot.simple.util.UploadExcelRules;
@@ -22,70 +21,68 @@ import tk.springboot.simple.util.UploadExcelRules;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import  static  tk.springboot.simple.util.Consts.*;
+
+import static tk.springboot.simple.util.Consts.STATUS_FAILURE;
+import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
-@RequestMapping("/sendInfo")
-public class SendInfoController extends BaseController{
+@RequestMapping("/personalInfo")
+public class PersonalInfoController extends BaseController{
 
     @Autowired
-    private SendInfoService sendInfoService;
+    private PersonalInfoService personalInfoService;
 
     @Autowired
     private UploadResultService uploadResultService;
 
     @RequestMapping("/all")
-    public List<SendInfo> getAll(SendInfo sendInfo) {
-
-        return sendInfoService.getAll(sendInfo);
-
+    public List<PersonalInfo> getAll(PersonalInfo personalInfo) {
+        return personalInfoService.getAll(personalInfo);
     }
 
     @RequestMapping(value = "/view/{id}")
     public RespInfo view(@PathVariable Integer id) {
-        SendInfo sendInfo = sendInfoService.getById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,sendInfo);
+        PersonalInfo personalInfo = personalInfoService.getById(id);
+        return new RespInfo(Consts.SUCCESS_CODE,personalInfo);
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public RespInfo delete(@PathVariable Integer id){
-        sendInfoService.deleteById(id);
+    public RespInfo delete(@PathVariable Integer id) {
+        personalInfoService.deleteById(id);
         return new RespInfo(Consts.SUCCESS_CODE,null,"删除成功");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public RespInfo save(@RequestBody SendInfo sendInfo) {
-        String msg = sendInfo.getId() == null ? "添加成功" : "修改成功";
-        sendInfoService.save(sendInfo);
-        return new RespInfo(Consts.SUCCESS_CODE,sendInfo,msg);
+    public RespInfo save(@RequestBody PersonalInfo personalInfo) {
+        String msg = personalInfo.getId() == null ? "添加成功" : "修改成功";
+        personalInfoService.save(personalInfo);
+        return new RespInfo(Consts.SUCCESS_CODE,personalInfo,msg);
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public RespInfo upload(HttpServletRequest request) {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
-        boolean isPartFailed=false;
         JSONArray jsonArray=new JSONArray();
+        boolean isPartFailed=false;
         for(UploadFile file:files){
             try {
                 String originalName=file.getOriginalFilename();
                 List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
-                List<SendInfo> sendInfos=UploadExcelRules.parseSendInfos(sheetBeans);
-                if(sendInfos.size()>0){
-                    for(SendInfo sendInfo:sendInfos){
+                List<PersonalInfo> personalInfos=UploadExcelRules.parsePersonalInfos(sheetBeans);
+                if(personalInfos.size()>0){
+                    for(PersonalInfo personalInfo:personalInfos){
                         String status;
                         try{
-                            sendInfoService.save(sendInfo);
+                            personalInfoService.save(personalInfo);
                             status=STATUS_SUCCESS;
                         } catch (Exception ex){
+                            status=STATUS_FAILURE;
                             if(!isPartFailed){
                                 isPartFailed=true;
-                                respInfo.setMessage("部分上传失败");
-                                respInfo.setStatus(Consts.ERROR_CODE);
                             }
-                            status=STATUS_FAILURE;
                         }
-                        saveUploadResult(jsonArray,sendInfo,status);
+                        saveUploadResult(jsonArray,personalInfo,status);
                     }
                 }else{
                     respInfo.setStatus(Consts.ERROR_CODE);
@@ -96,13 +93,17 @@ public class SendInfoController extends BaseController{
             }
         }
         if(jsonArray.size()>0){
-            uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.SENDINFO));
+            uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.PERSONALINFO));
+        }
+        if(isPartFailed){
+            respInfo.setMessage("部分上传失败");
+            respInfo.setStatus(Consts.ERROR_CODE);
         }
         return respInfo;
     }
 
-    public void saveUploadResult(JSONArray jsonArray,SendInfo sendInfo,String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(sendInfo);
+    public void saveUploadResult(JSONArray jsonArray,PersonalInfo personalInfo,String result){
+        JSONObject jsonObject= (JSONObject) JSON.toJSON(personalInfo);
         jsonObject.put("status",result);
         jsonArray.add(jsonObject);
     }

@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/uploadResult")
-public class UploadResultController {
+public class UploadResultController extends BaseController{
 
     @Autowired
     private UploadResultService uploadResultService;
@@ -28,9 +28,10 @@ public class UploadResultController {
     }
 
     @RequestMapping(value = "/view/{uploadType}")
-    public Object view(@PathVariable UploadType uploadType) {
+    public Object view(@PathVariable UploadType uploadType,UploadResult uploadResultView) {
         List<JSONObject> list=new ArrayList<>();
-        List<UploadResult> uploadResults = uploadResultService.getByType(uploadType);
+        uploadResultView.setUploadType(uploadType);
+        List<UploadResult> uploadResults = uploadResultService.getByType(uploadResultView);
         if(uploadResults.size()>0){
             for(UploadResult uploadResult:uploadResults){
                 Date date=uploadResult.getCreateDate();
