@@ -1,4 +1,4 @@
-#Spring Boot 前端部分见 vue-simple项目 项目依赖common-utils project
+#Spring Boot 前端部分见 vue-simple项目 
 
 #MyBatis3.3.0
 
