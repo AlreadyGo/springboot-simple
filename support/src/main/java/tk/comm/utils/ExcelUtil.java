@@ -1,17 +1,15 @@
 package tk.comm.utils;
 
+import org.apache.poi.ss.usermodel.*;
 import tk.comm.model.CellBean;
 import tk.comm.model.SheetBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -206,7 +204,7 @@ public class ExcelUtil {
 
     private static String getCellValue(Cell cell, int cellType) {
         String result = "";
-
+        CellStyle cellStyle=cell.getCellStyle();
         switch (cellType) {
             case 1:
                 result = cell.getStringCellValue();
@@ -215,18 +213,18 @@ public class ExcelUtil {
                 result = (new Boolean(cell.getBooleanCellValue())).toString();
                 break;
             case 0: {
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                if (HSSFDateUtil.isCellDateFormatted(cell) || cellStyle.getDataFormat()>170) {
                     result = getDateResult(cell);
                 } else {
-                    result = (new Double(cell.getNumericCellValue())).toString();
+                    result = new BigDecimal(cell.getNumericCellValue()).toPlainString();
                 }
                 break;
             }
             case 2: {
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                if (HSSFDateUtil.isCellDateFormatted(cell) || cellStyle.getDataFormat()>170) {
                     result = getDateResult(cell);
                 } else {
-                    result = String.valueOf(cell.getNumericCellValue());
+                    result = new BigDecimal(cell.getNumericCellValue()).toPlainString();
                 }
                 break;
             }
@@ -238,14 +236,14 @@ public class ExcelUtil {
     }
     private static String getDateResult(Cell cell){
         Date date = cell.getDateCellValue();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         return sdf.format(date);
     }
 
 
     public static void main(String[] args) {
         try {
-            readExcel(new FileInputStream("C:\\Users\\dell\\Desktop\\sh\\1-客户信息维护.xlsx"),"xlsx");
+            readExcel(new FileInputStream("C:\\Users\\dell\\Desktop\\test.xlsx"),"xlsx");
 //            List<SheetBean> sheetBeans=new ArrayList<SheetBean>();
 //            SheetBean sheetBean=new SheetBean();
 //            sheetBean.setSheetNo(0);

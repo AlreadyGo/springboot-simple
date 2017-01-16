@@ -18,7 +18,9 @@ public class BaseService {
         if(dateRange==null) dateRange=3;
         Example.Criteria criteria=example.createCriteria();
         criteria.andCondition(String.format("create_date>DATE_ADD(now(),INTERVAL -%d MONTH)",dateRange));
-        for(String condition:conditions) criteria.andCondition(condition);
+        for(String condition:conditions) {
+            if(!StringUtils.isEmpty(condition)) criteria.andCondition(condition);
+        }
         return example;
     }
 }

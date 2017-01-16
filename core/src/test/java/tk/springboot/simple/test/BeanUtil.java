@@ -17,7 +17,7 @@ public class BeanUtil {
     public static void main(String[] args) {
 
 
-        System.out.println(genCreateTableSql("tk.springboot.simple.model.PersonalInfo"));
+        System.out.println(genCreateTableSql("tk.springboot.simple.model.Account"));
 
     }
 
@@ -39,6 +39,7 @@ public class BeanUtil {
             Class clz = Class.forName(bean);
             Field[] strs = clz.getDeclaredFields();
             List<String> propertyList = new ArrayList<String>();
+            propertyList.add("int`id");
             for (int i = 0; i < strs.length; i++) {
                 String protype = strs[i].getType().toString();
                 propertyList.add(protype.substring(protype.lastIndexOf(".")+1)+"`"+strs[i].getName());

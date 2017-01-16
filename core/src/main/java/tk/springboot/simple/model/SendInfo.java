@@ -25,6 +25,14 @@ public class SendInfo extends BaseEntity{
     private Date createDate;
     private Date updateDate;
 
+    public SendInfo() {
+    }
+
+    public SendInfo(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
+
     public Date getUpdateDate() {
         return updateDate;
     }

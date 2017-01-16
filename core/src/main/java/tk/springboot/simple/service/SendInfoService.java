@@ -47,4 +47,7 @@ public class SendInfoService extends BaseService{
             sendInfoMapper.insert(sendInfo);
         }
     }
+    public SendInfo get(SendInfo sendInfo){
+        return sendInfoMapper.selectOne(sendInfo);
+    }
 }

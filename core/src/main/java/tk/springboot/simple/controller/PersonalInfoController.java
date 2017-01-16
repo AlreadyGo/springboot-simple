@@ -60,13 +60,12 @@ public class PersonalInfoController extends BaseController{
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public RespInfo upload(HttpServletRequest request) {
+    public RespInfo upload(HttpServletRequest request) throws Exception {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
         JSONArray jsonArray=new JSONArray();
         boolean isPartFailed=false;
         for(UploadFile file:files){
-            try {
                 String originalName=file.getOriginalFilename();
                 List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
                 List<PersonalInfo> personalInfos=UploadExcelRules.parsePersonalInfos(sheetBeans);
@@ -88,15 +87,11 @@ public class PersonalInfoController extends BaseController{
                     respInfo.setStatus(Consts.ERROR_CODE);
                     respInfo.setMessage("上传失败");
                 }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         }
         if(jsonArray.size()>0){
             uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.PERSONALINFO));
         }
         if(isPartFailed){
-            respInfo.setMessage("部分上传失败");
             respInfo.setStatus(Consts.ERROR_CODE);
         }
         return respInfo;

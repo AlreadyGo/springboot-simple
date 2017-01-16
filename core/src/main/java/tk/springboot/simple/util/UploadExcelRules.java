@@ -1,8 +1,10 @@
 package tk.springboot.simple.util;
 
+import org.apache.commons.lang.StringUtils;
 import tk.comm.model.CellBean;
 import tk.comm.model.SheetBean;
 import tk.springboot.simple.model.DeliveryManInfo;
+import tk.springboot.simple.model.OrderInfo;
 import tk.springboot.simple.model.PersonalInfo;
 import tk.springboot.simple.model.SendInfo;
 
@@ -26,6 +28,10 @@ public class UploadExcelRules {
     private static final int PERSONALINFO_ROW=0;
 
 
+    private static final int ORDER_SHEET=0;
+    private static final int ORDER_ROW=1;
+
+
     public static List<SendInfo> parseSendInfos(List<SheetBean> sheetBeans){
         List<SendInfo> sendInfos=new ArrayList<>();
         SendInfo sendInfo;
@@ -40,7 +46,7 @@ public class UploadExcelRules {
                     sendInfo=new SendInfo();
                     for(CellBean cellBean:cellBeanList){
                         int colNo=cellBean.getColNo();
-                        String cellData=cellBean.getCellData();
+                        String cellData=cellBean.getCellData().trim();
                         if(colNo==1) sendInfo.setCode(cellData);
                         if(colNo==2) sendInfo.setName(cellData);
                         if(colNo==3) sendInfo.setAccountMeasure(cellData);
@@ -91,7 +97,7 @@ public class UploadExcelRules {
                     deliveryManInfo=new DeliveryManInfo();
                     for(CellBean cellBean:cellBeanList){
                         int colNo=cellBean.getColNo();
-                        String cellData=cellBean.getCellData();
+                        String cellData=cellBean.getCellData().trim();
                         if(colNo==1) deliveryManInfo.setCode(cellData);
                         if(colNo==2) deliveryManInfo.setName(cellData);
                         if(colNo==3) deliveryManInfo.setAddress(cellData);
@@ -127,17 +133,18 @@ public class UploadExcelRules {
                     personalInfo=new PersonalInfo();
                     for(CellBean cellBean:cellBeanList){
                         int colNo=cellBean.getColNo();
-                        String cellData=cellBean.getCellData();
-                        if(colNo==0) personalInfo.setDriverName(cellData);
-                        if(colNo==1) personalInfo.setCarNum(cellData);
-                        if(colNo==2) personalInfo.setTelephoneNum(cellData);
-                        if(colNo==3) personalInfo.setCarType(cellData);
-                        if(colNo==3) personalInfo.setCarTeam(cellData);
-                        if(colNo==3) personalInfo.setBankNum(cellData);
-                        if(colNo==3) personalInfo.setOrderRate(cellData);
-                        if(colNo==3) personalInfo.setServiceAbility(cellData);
-                        if(colNo==3) personalInfo.setAddress(cellData);
-                        if(colNo==3) personalInfo.setDescription(cellData);
+                        String cellData=cellBean.getCellData().trim();
+                        if(colNo==1) personalInfo.setRoute(cellData);
+                        if(colNo==2) personalInfo.setDriverName(cellData);
+                        if(colNo==3) personalInfo.setCarNum(cellData);
+                        if(colNo==4) personalInfo.setTelephoneNum(cellData);
+                        if(colNo==5) personalInfo.setCarType(cellData);
+                        if(colNo==6) personalInfo.setCarTeam(cellData);
+                        if(colNo==7) personalInfo.setBankNum(cellData);
+                        if(colNo==8) personalInfo.setOrderRate(cellData);
+                        if(colNo==9) personalInfo.setServiceAbility(cellData);
+                        if(colNo==10) personalInfo.setAddress(cellData);
+                        if(colNo==11) personalInfo.setDescription(cellData);
                     }
                     personalInfo.setCreateDate(new Date());
                     personalInfo.setUpdateDate(new Date());
@@ -146,5 +153,48 @@ public class UploadExcelRules {
             }
         }
         return personalInfos;
+    }
+
+    public static List<OrderInfo> parseOrders(List<SheetBean> sheetBeans) {
+        List<OrderInfo> orders=new ArrayList<>();
+        OrderInfo order;
+        SheetBean sheetBean=sheetBeans.get(ORDER_SHEET);
+        List<CellBean> cellBeans=sheetBean.getCellBeanList();
+        Map<Integer,List<CellBean>> combineResult=combineByRow(cellBeans);
+        if(combineResult.size()>0){
+            for(Map.Entry<Integer, List<CellBean>> entry:combineResult.entrySet()){
+                Integer row=entry.getKey();
+                if(row>ORDER_ROW){
+                    List<CellBean> cellBeanList=entry.getValue();
+                    order=new OrderInfo();
+                    for(CellBean cellBean:cellBeanList){
+                        int colNo=cellBean.getColNo();
+                        String cellData=cellBean.getCellData().trim();
+                        if(colNo==1) order.setSendDate(cellData);
+                        if(colNo==2) order.setCustomerCode(cellData);
+                        if(colNo==3) order.setSender(cellData);
+                        if(colNo==4) order.setOrderNum(cellData);
+                        if(colNo==5) order.setOriginAddress(cellData);
+                        if(colNo==6) order.setDestinationCity(cellData);
+                        if(colNo==7) order.setReceiverCom(cellData);
+                        if(colNo==8) order.setReceiverPerson(cellData);
+                        if(colNo==9) order.setTelephoneNum(cellData);
+                        if(colNo==10) order.setDestinationAddress(cellData);
+                        if(colNo==11) order.setProductName(cellData);
+                        if(colNo==12) order.setWrap(cellData);
+                        if(colNo==13) order.setCount(StringUtils.isEmpty(cellData)?null:Double.valueOf(cellData).intValue());
+                        if(colNo==14) order.setWeight(StringUtils.isEmpty(cellData)?null:Double.valueOf(cellData));
+                        if(colNo==15) order.setVolume(StringUtils.isEmpty(cellData)?null:Double.valueOf(cellData));
+                        if(colNo==16) order.setReceiveDate(cellData);
+                        if(colNo==17) order.setSettleWay(cellData);
+                        if(colNo==18) order.setAmount(StringUtils.isEmpty(cellData)?null:Double.valueOf(cellData));
+                    }
+                    order.setCreateDate(new Date());
+                    order.setUpdateDate(new Date());
+                    orders.add(order);
+                }
+            }
+        }
+        return orders;
     }
 }
