@@ -17,7 +17,7 @@ public class AccountController extends BaseController{
     private AccountService accountService;
 
     @RequestMapping("/all")
-    public RespInfo getAll(Account account) {
+    public RespInfo getAll(Account account) throws Exception {
         return new RespInfo(Consts.SUCCESS_CODE,accountService.getAll(account));
     }
 

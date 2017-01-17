@@ -18,11 +18,14 @@ import java.util.List;
 public class AccountService extends BaseService{
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    private OrderService orderService;
 
-    public List<Account> getAll(Account account) {
+    public List<Account> getAll(Account account) throws Exception {
         String sort=account.getSort(),order=account.getOrder(),orderNum=account.getOrderNum(),orderNumCondition="";
         Integer dateRange=account.getDateRange();
         if(!StringUtils.isEmpty(orderNum)){
+            if(orderService.getOrderInfoByNum(orderNum)==null) throw new Exception("该订单不存在");
             orderNumCondition=String.format("order_num='%s'",orderNum);
         }
         

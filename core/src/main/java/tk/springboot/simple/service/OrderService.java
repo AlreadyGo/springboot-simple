@@ -49,4 +49,9 @@ public class OrderService extends BaseService{
     public int getCount(OrderInfo orderBean){
         return orderBeanMapper.selectCount(orderBean);
     }
+
+    public OrderInfo getOrderInfoByNum(String orderNum){
+        OrderInfo orderInfo=new OrderInfo();orderInfo.setOrderNum(orderNum);
+        return orderBeanMapper.selectOne(orderInfo);
+    }
 }
