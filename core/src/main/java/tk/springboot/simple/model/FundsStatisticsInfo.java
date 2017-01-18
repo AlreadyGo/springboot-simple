@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/1/18.
  */
-public class fundsStatisticsInfo extends BaseEntity {
+public class FundsStatisticsInfo extends BaseEntity {
     private Date  paymentDate;//付款日期
     private String discountNetting ;//回扣冲低
     private String  paidTrunk;//已付款

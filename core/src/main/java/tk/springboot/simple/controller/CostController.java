@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import tk.springboot.simple.model.CostInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.service.CostInfoService;
-import tk.springboot.simple.service.UploadResultService;
 import tk.springboot.simple.util.Consts;
 
 /**
@@ -21,8 +20,7 @@ public class CostController extends BaseController{
     @Autowired
     private CostInfoService CostInfoService;
 
-    @Autowired
-    private UploadResultService uploadResultService;
+
 
     @RequestMapping("/all")
     public RespInfo getAll(CostInfo CostInfo) throws Exception {
