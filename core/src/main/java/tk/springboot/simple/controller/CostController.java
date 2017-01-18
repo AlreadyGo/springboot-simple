@@ -11,8 +11,6 @@ import tk.springboot.simple.service.CostInfoService;
 import tk.springboot.simple.service.UploadResultService;
 import tk.springboot.simple.util.Consts;
 
-import java.util.List;
-
 /**
  * Created by Administrator on 2017/1/17.
  */
@@ -27,9 +25,10 @@ public class CostController extends BaseController{
     private UploadResultService uploadResultService;
 
     @RequestMapping("/all")
-    public List<CostInfo> getAll(CostInfo CostInfo) {
+    public RespInfo getAll(CostInfo CostInfo) throws Exception {
+        RespInfo res=new RespInfo(Consts.SUCCESS_CODE, CostInfoService.getAll(CostInfo));
 
-        return CostInfoService.getAll(CostInfo);
+        return res;
 
     }
 

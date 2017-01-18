@@ -2,6 +2,7 @@ package tk.springboot.simple.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.springboot.simple.mapper.CostInfoMapper;
 import tk.springboot.simple.model.CostInfo;
 
@@ -15,11 +16,16 @@ import java.util.List;
 public class CostInfoService extends BaseService{
     @Autowired
     private CostInfoMapper CostInfoMapper;
-
-    public List<CostInfo> getAll(CostInfo CostInfo) {
-        String sort=CostInfo.getSort(),order=CostInfo.getOrder();
+    @Autowired
+    private OrderService orderService;
+    public List<CostInfo> getAll(CostInfo CostInfo) throws Exception{
+        String sort=CostInfo.getSort(),order=CostInfo.getOrder(),orderNum=CostInfo.getOrderNum(),orderNumCondition="";
         Integer dateRange=CostInfo.getDateRange();
-        return CostInfoMapper.selectByExample(createDateRangeExample(CostInfo.class,order,sort,dateRange));
+        if(!StringUtils.isEmpty(orderNum)){
+            if(orderService.getOrderInfoByNum(orderNum)==null) throw new Exception("该订单不存在");
+            orderNumCondition=String.format("order_num='%s'",orderNum);
+        }
+        return CostInfoMapper.selectByExample(createDateRangeExample(CostInfo.class,order,sort,dateRange,orderNumCondition));
     }
 
     public int getCount(CostInfo CostInfo){
