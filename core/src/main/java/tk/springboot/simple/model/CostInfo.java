@@ -1,5 +1,7 @@
 package tk.springboot.simple.model;//
 
+import tk.springboot.simple.model.enums.CostStatus;
+
 import java.util.Date;
 
 /**
@@ -21,8 +23,17 @@ public class CostInfo extends BaseEntity{
     private String deliveryCost;//送货费
     private String otherCost;//其他费用
     private String totalCost;//总成本
+    private CostStatus costStatus;//成本状态
     private Date createDate;
     private Date updateDate;
+
+    public CostStatus getCostStatus() {
+        return costStatus;
+    }
+
+    public void setCostStatus(CostStatus costStatus) {
+        this.costStatus = costStatus;
+    }
 
     public Date getCreateDate() {
         return createDate;

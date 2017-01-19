@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.CostInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.service.CostInfoService;
@@ -49,11 +50,4 @@ public class CostController extends BaseController{
         return new RespInfo(Consts.SUCCESS_CODE,CostInfo,msg);
     }
 
-
-
-    public void saveUploadResult(JSONArray jsonArray,CostInfo CostInfo,String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(CostInfo);
-        jsonObject.put("status",result);
-        jsonArray.add(jsonObject);
-    } 
 }

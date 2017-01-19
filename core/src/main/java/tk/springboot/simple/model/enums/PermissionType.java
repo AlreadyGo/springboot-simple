@@ -2,7 +2,7 @@ package tk.springboot.simple.model.enums;
 
 /**
  * @author zhou
- * @Description:
+ * @Description:权限类型
  * @date 2016/12/26 14:18
  */
 public enum PermissionType {
