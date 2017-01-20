@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class FundsStatisticsInfo extends BaseEntity {
     private Date  paymentDate;//付款日期
+    private String orderNum;//订单号
     private String discountNetting ;//回扣冲低
     private String  paidTrunk;//已付款
     private String  balancesTrunk;//余额款
@@ -17,6 +18,15 @@ public class FundsStatisticsInfo extends BaseEntity {
     private String  chargeSituation;//收款情况
     private Date createDate;
     private Date updateDate;
+
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
     public Date getPaymentDate() {
         return paymentDate;
