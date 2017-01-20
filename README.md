@@ -1,10 +1,10 @@
 # frontend
 
-> A Vue.js+webpack project [vue-simple](http://alreadygo.github.io/vue-simple)
+> A Vue.js+webpack project [vue-simple](http://github.com/alreadygo/vue-simple)
 
 #backend
 
-> [springboot-simple](http://alreadygo.github.io/springboot-simple) project
+> [springboot-simple](https://github.com/alreadygo/springboot-simple) project
 
 #MyBatis3.3.0
 
