@@ -71,13 +71,16 @@ public class UserController extends BaseController{
         userRoleService.deleteById(userId.intValue());
         List<UserRole> userRoles=new ArrayList<>();
         UserRole userRole;
-        for(Long sid:dispatchView.getSubIds()){
-            userRole=new UserRole();
-            userRole.setUid(userId);
-            userRole.setRid(sid);
-            userRoles.add(userRole);
+        Long[] subIds=dispatchView.getSubIds();
+        if(subIds.length>0){
+            for(Long sid:subIds){
+                userRole=new UserRole();
+                userRole.setUid(userId);
+                userRole.setRid(sid);
+                userRoles.add(userRole);
+            }
+            userRoleService.saveList(userRoles);
         }
-        userRoleService.saveList(userRoles);
         return new RespInfo(Consts.SUCCESS_CODE,null,"配置成功");
     }
 
