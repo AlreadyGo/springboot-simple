@@ -64,24 +64,27 @@ public class PersonalInfoController extends BaseController{
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
         JSONArray jsonArray=new JSONArray();
-        boolean isPartFailed=false;
+        boolean isPartSuccess=false,isPartFailed=false;
         for(UploadFile file:files){
                 String originalName=file.getOriginalFilename();
                 List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
                 List<PersonalInfo> personalInfos=UploadExcelRules.parsePersonalInfos(sheetBeans);
                 if(personalInfos.size()>0){
                     for(PersonalInfo personalInfo:personalInfos){
-                        String status;
+                        String status;String errorReason=null;
                         try{
                             personalInfoService.save(personalInfo);
                             status=STATUS_SUCCESS;
+                            isPartSuccess=true;
                         } catch (Exception ex){
                             status=STATUS_FAILURE;
                             if(!isPartFailed){
                                 isPartFailed=true;
                             }
+                            errorReason="该记录已存在,不可重复上传";
+                            ex.printStackTrace();
                         }
-                        saveUploadResult(jsonArray,personalInfo,status);
+                        saveUploadResult(jsonArray,personalInfo,status,errorReason);
                     }
                 }else{
                     respInfo.setStatus(Consts.ERROR_CODE);
@@ -91,7 +94,11 @@ public class PersonalInfoController extends BaseController{
         if(jsonArray.size()>0){
             uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.PERSONALINFO));
         }
-        if(isPartFailed){
+        if(isPartSuccess && isPartFailed){
+            respInfo.setMessage("部分上传成功");
+        }
+        if(!isPartSuccess && isPartFailed){
+            respInfo.setMessage("上传失败");
             respInfo.setStatus(Consts.ERROR_CODE);
         }
         return respInfo;

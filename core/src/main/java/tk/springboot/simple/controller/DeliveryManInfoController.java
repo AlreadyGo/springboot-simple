@@ -65,26 +65,34 @@ public class DeliveryManInfoController extends BaseController {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
         JSONArray jsonArray=new JSONArray();
-        boolean isPartFailed=false;
+        boolean isPartFailed=false,isPartSuccess=false;
         for(UploadFile file:files){
            String originalName=file.getOriginalFilename();
            List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
            List<DeliveryManInfo> deliveryManInfos=UploadExcelRules.parseDeliveryManInfos(sheetBeans);
            if(deliveryManInfos.size()>0){
                for(DeliveryManInfo deliveryManInfo:deliveryManInfos){
-                   String status;
+                   String errorReason=null,status;
                    try{
                        deliveryManInfoService.save(deliveryManInfo);
+                       isPartSuccess=true;
                        status=STATUS_SUCCESS;
                    } catch (Exception ex){
-                       status=STATUS_FAILURE;
                        if(!isPartFailed){
                            isPartFailed=true;
-                           respInfo.setMessage("部分上传失败");
-                           respInfo.setStatus(Consts.ERROR_CODE);
                        }
+                       errorReason="该记录已存在,不可重复上传";
+                       ex.printStackTrace();
+                       status=STATUS_FAILURE;
                    }
-                   saveUploadResult(jsonArray,deliveryManInfo,status);
+                   saveUploadResult(jsonArray,deliveryManInfo,status,errorReason);
+               }
+               if(isPartSuccess && isPartFailed){
+                   respInfo.setMessage("部分上传成功");
+               }
+               if(!isPartSuccess && isPartFailed){
+                   respInfo.setMessage("上传失败");
+                   respInfo.setStatus(Consts.ERROR_CODE);
                }
            }else{
                throw new Exception("上传失败");
@@ -96,9 +104,4 @@ public class DeliveryManInfoController extends BaseController {
         return respInfo;
     }
 
-    public void saveUploadResult(JSONArray jsonArray,DeliveryManInfo deliveryManInfo,String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(deliveryManInfo);
-        jsonObject.put("status",result);
-        jsonArray.add(jsonObject);
-    }
 }

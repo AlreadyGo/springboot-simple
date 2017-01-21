@@ -1,8 +1,12 @@
 package tk.springboot.simple.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import tk.springboot.simple.exceptions.BizException;
+import tk.springboot.simple.model.OrderInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.util.Consts;
 
@@ -24,5 +28,12 @@ public class BaseController {
             message=ex.getMessage();
         }
         return new RespInfo(Consts.ERROR_CODE,ex.getMessage(),message);
+    }
+
+    public void saveUploadResult(JSONArray jsonArray, Object object, String result, String errorReason){
+        JSONObject jsonObject= (JSONObject) JSON.toJSON(object);
+        jsonObject.put("status",result);
+        jsonObject.put("errorReason",errorReason);
+        jsonArray.add(jsonObject);
     }
 }

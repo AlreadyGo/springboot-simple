@@ -10,6 +10,7 @@ import tk.comm.model.SheetBean;
 import tk.comm.model.UploadFile;
 import tk.comm.utils.DownUploadUtil;
 import tk.comm.utils.ExcelUtil;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.SendInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.UploadResult;
@@ -65,7 +66,7 @@ public class SendInfoController extends BaseController{
     public RespInfo upload(HttpServletRequest request) throws IOException {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
-        boolean isPartFailed=false;
+        boolean isPartFailed=false,isPartSuccess=false;
         JSONArray jsonArray=new JSONArray();
         for(UploadFile file:files){
                 String originalName=file.getOriginalFilename();
@@ -73,19 +74,27 @@ public class SendInfoController extends BaseController{
                 List<SendInfo> sendInfos=UploadExcelRules.parseSendInfos(sheetBeans);
                 if(sendInfos.size()>0){
                     for(SendInfo sendInfo:sendInfos){
-                        String status;
+                        String status,errorReason=null;
                         try{
                             sendInfoService.save(sendInfo);
                             status=STATUS_SUCCESS;
+                            isPartSuccess=true;
                         } catch (Exception ex){
                             if(!isPartFailed){
                                 isPartFailed=true;
-                                respInfo.setMessage("部分上传失败");
-                                respInfo.setStatus(Consts.ERROR_CODE);
                             }
+                            errorReason="该记录已存在,不可重复上传";
+                            ex.printStackTrace();
                             status=STATUS_FAILURE;
                         }
-                        saveUploadResult(jsonArray,sendInfo,status);
+                        saveUploadResult(jsonArray,sendInfo,status,errorReason);
+                    }
+                    if(isPartSuccess && isPartFailed){
+                        respInfo.setMessage("部分上传成功");
+                    }
+                    if(!isPartSuccess && isPartFailed){
+                        respInfo.setMessage("上传失败");
+                        respInfo.setStatus(Consts.ERROR_CODE);
                     }
                 }else{
                     respInfo.setStatus(Consts.ERROR_CODE);

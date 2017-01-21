@@ -10,6 +10,7 @@ import tk.comm.model.SheetBean;
 import tk.comm.model.UploadFile;
 import tk.comm.utils.DownUploadUtil;
 import tk.comm.utils.ExcelUtil;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.OrderInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.SendInfo;
@@ -72,7 +73,7 @@ public class OrderController extends BaseController{
     public RespInfo upload(HttpServletRequest request) throws IOException {
         List<UploadFile> files= DownUploadUtil.upload(request);
         RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
-        boolean isPartFailed=false;
+        boolean isPartSuccess=false,isPartFailed=false;
         JSONArray jsonArray=new JSONArray();
         for(UploadFile file:files){
                 String originalName=file.getOriginalFilename();
@@ -80,27 +81,35 @@ public class OrderController extends BaseController{
                 List<OrderInfo> orders=UploadExcelRules.parseOrders(sheetBeans);
                 if(orders.size()>0){
                     for(OrderInfo orderInfo:orders){
-                        String status;
+                        String status,errorReason=null;
                         String code=orderInfo.getCustomerCode(),name=orderInfo.getSender();
                         try{
                             if(sendInfoService.get(new SendInfo(code,name))!=null){
                                 orderService.save(orderInfo);
                                 status=STATUS_SUCCESS;
+                                isPartSuccess=true;
                             }else{
-                                throw new Exception(String.format("客户信息中不存在该客户编号 %s 和客户名称 %s ",code,name));
+                                throw new BizException(String.format("客户信息中不存在该客户编号 %s 和客户名称 %s ",code,name));
                             }
 
                         } catch (Exception ex){
                             if(!isPartFailed){
                                 isPartFailed=true;
                             }
+                            errorReason="该记录已存在,不可重复上传";
+                            if(ex instanceof BizException){
+                                errorReason=ex.getMessage();
+                            }
                             ex.printStackTrace();
                             status=STATUS_FAILURE;
                         }
-                        saveUploadResult(jsonArray,orderInfo,status);
+                        saveUploadResult(jsonArray,orderInfo,status,errorReason);
                     }
-                    if(isPartFailed){
-                        respInfo.setMessage("部分上传失败");
+                    if(isPartSuccess && isPartFailed){
+                        respInfo.setMessage("部分上传成功");
+                    }
+                    if(!isPartSuccess && isPartFailed){
+                        respInfo.setMessage("上传失败");
                         respInfo.setStatus(Consts.ERROR_CODE);
                     }
                 }else{
@@ -115,9 +124,4 @@ public class OrderController extends BaseController{
         return respInfo;
     }
 
-    public void saveUploadResult(JSONArray jsonArray, OrderInfo orderInfo, String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(orderInfo);
-        jsonObject.put("status",result);
-        jsonArray.add(jsonObject);
-    }
 }
