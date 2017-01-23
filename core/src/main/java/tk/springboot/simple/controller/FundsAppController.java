@@ -47,4 +47,10 @@ public class FundsAppController extends BaseController {
         return new RespInfo(Consts.SUCCESS_CODE, costInfo, "提交成功");
     }
 
+    @RequestMapping(value = "/rejectCostStatus", method = RequestMethod.POST)
+    public RespInfo rejectCostStatus(@RequestBody CostInfo costInfo) throws BizException {
+        costInfoService.rejectCostStatus(costInfo);
+        return new RespInfo(Consts.SUCCESS_CODE, costInfo, "拒绝成功");
+    }
+
 }

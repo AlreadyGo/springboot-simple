@@ -7,5 +7,5 @@ package tk.springboot.simple.model.enums;
  * @jdk v1.8
  */
 public enum  CostStatus {
-    待提交,已提交,已申请,已通过
+    可修改,待提交,已提交,已申请,已通过
 }

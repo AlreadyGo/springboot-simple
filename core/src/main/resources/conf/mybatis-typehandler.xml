@@ -16,5 +16,7 @@
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
         <typeHandler javaType="tk.springboot.simple.model.enums.CostStatus"
                      handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+        <typeHandler javaType="tk.springboot.simple.model.enums.AccountStatus"
+                     handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
     </typeHandlers>
 </configuration>

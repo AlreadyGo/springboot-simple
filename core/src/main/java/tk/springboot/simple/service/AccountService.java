@@ -3,8 +3,10 @@ package tk.springboot.simple.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.mapper.AccountMapper;
 import tk.springboot.simple.model.Account;
+import tk.springboot.simple.model.enums.AccountStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +51,22 @@ public class AccountService extends BaseService{
         } else {
             account.setCreateDate(date);
             account.setUpdateDate(date);
+            if(StringUtils.isEmpty(account.getAccountStatus()))
+            account.setAccountStatus(AccountStatus.可修改);
             accountMapper.insert(account);
+        }
+    }
+
+    public void rejectAccountStatus(Account account) throws BizException {
+        updateStatus(AccountStatus.不可修改,account,"不可重复拒绝");
+    }
+
+    private void updateStatus(AccountStatus exist,Account account,String message) throws BizException {
+        Account existed=accountMapper.selectByPrimaryKey(account);
+        if(existed!=null && existed.getAccountStatus().equals(exist)) {
+            accountMapper.updateByPrimaryKeySelective(account);
+        }else{
+            throw new BizException(message);
         }
     }
 }

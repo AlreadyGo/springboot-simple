@@ -1,5 +1,7 @@
 package tk.springboot.simple.model;
 
+import tk.springboot.simple.model.enums.AccountStatus;
+
 import java.util.Date;
 
 /**
@@ -19,6 +21,16 @@ public class Account extends BaseEntity {
     private Double sum;//合计收入
     private Date createDate;
     private Date updateDate;
+    private AccountStatus accountStatus;
+
+
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
 
     public String getOrderNum() {
         return orderNum;

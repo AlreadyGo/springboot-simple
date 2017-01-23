@@ -3,12 +3,14 @@ package tk.springboot.simple.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.comm.model.SheetBean;
 import tk.comm.model.UploadFile;
 import tk.comm.utils.DownUploadUtil;
 import tk.comm.utils.ExcelUtil;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.PersonalInfo;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.UploadResult;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+import static tk.springboot.simple.util.Consts.DUPLICATED_MESSAGE;
 import static tk.springboot.simple.util.Consts.STATUS_FAILURE;
 import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
@@ -73,6 +76,7 @@ public class PersonalInfoController extends BaseController{
                     for(PersonalInfo personalInfo:personalInfos){
                         String status;String errorReason=null;
                         try{
+                            doValid(personalInfo);
                             personalInfoService.save(personalInfo);
                             status=STATUS_SUCCESS;
                             isPartSuccess=true;
@@ -81,8 +85,11 @@ public class PersonalInfoController extends BaseController{
                             if(!isPartFailed){
                                 isPartFailed=true;
                             }
-                            errorReason="该记录已存在,不可重复上传";
+                            errorReason=DUPLICATED_MESSAGE;
                             ex.printStackTrace();
+                            if(ex instanceof BizException){
+                                errorReason=ex.getMessage();
+                            }
                         }
                         saveUploadResult(jsonArray,personalInfo,status,errorReason);
                     }
@@ -104,9 +111,8 @@ public class PersonalInfoController extends BaseController{
         return respInfo;
     }
 
-    public void saveUploadResult(JSONArray jsonArray,PersonalInfo personalInfo,String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(personalInfo);
-        jsonObject.put("status",result);
-        jsonArray.add(jsonObject);
+    private void doValid(PersonalInfo personalInfo) throws BizException {
+        if(StringUtils.isEmpty(personalInfo.getDriverName())) throw new BizException("司机名不能为空");
     }
+
 }

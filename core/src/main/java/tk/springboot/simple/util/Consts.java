@@ -10,4 +10,5 @@ public interface Consts {
     int ERROR_CODE=-1;
     String  STATUS_SUCCESS="成功";
     String  STATUS_FAILURE="失败";
+    String DUPLICATED_MESSAGE="该记录已存在,不可重复上传";
 }

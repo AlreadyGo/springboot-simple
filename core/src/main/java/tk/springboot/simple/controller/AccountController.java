@@ -2,6 +2,7 @@ package tk.springboot.simple.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.Account;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.service.AccountService;
@@ -39,4 +40,12 @@ public class AccountController extends BaseController{
         accountService.save(account);
         return new RespInfo(Consts.SUCCESS_CODE,account,msg);
     }
+
+    @RequestMapping(value = "/rejectAccountStatus", method = RequestMethod.POST)
+    public RespInfo rejectAccountStatus(@RequestBody Account account) throws BizException {
+        accountService.rejectAccountStatus(account);
+        return new RespInfo(Consts.SUCCESS_CODE,account,"拒绝成功");
+    }
+
+
 }

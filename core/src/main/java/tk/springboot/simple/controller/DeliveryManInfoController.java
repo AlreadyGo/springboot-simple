@@ -3,12 +3,14 @@ package tk.springboot.simple.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.comm.model.SheetBean;
 import tk.comm.model.UploadFile;
 import tk.comm.utils.DownUploadUtil;
 import tk.comm.utils.ExcelUtil;
+import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.RespInfo;
 import tk.springboot.simple.model.DeliveryManInfo;
 import tk.springboot.simple.model.UploadResult;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import static tk.springboot.simple.util.Consts.DUPLICATED_MESSAGE;
 import static tk.springboot.simple.util.Consts.STATUS_FAILURE;
 import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
@@ -74,6 +77,7 @@ public class DeliveryManInfoController extends BaseController {
                for(DeliveryManInfo deliveryManInfo:deliveryManInfos){
                    String errorReason=null,status;
                    try{
+                       doValid(deliveryManInfo);
                        deliveryManInfoService.save(deliveryManInfo);
                        isPartSuccess=true;
                        status=STATUS_SUCCESS;
@@ -81,8 +85,11 @@ public class DeliveryManInfoController extends BaseController {
                        if(!isPartFailed){
                            isPartFailed=true;
                        }
-                       errorReason="该记录已存在,不可重复上传";
+                       errorReason=DUPLICATED_MESSAGE;
                        ex.printStackTrace();
+                       if(ex instanceof BizException){
+                           errorReason=ex.getMessage();
+                       }
                        status=STATUS_FAILURE;
                    }
                    saveUploadResult(jsonArray,deliveryManInfo,status,errorReason);
@@ -102,6 +109,11 @@ public class DeliveryManInfoController extends BaseController {
             uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.DELIVERYMANINFO));
         }
         return respInfo;
+    }
+
+    private void doValid(DeliveryManInfo deliveryManInfo) throws BizException {
+        if(StringUtils.isEmpty(deliveryManInfo.getCode()) || StringUtils.isEmpty(deliveryManInfo.getName()))
+            throw new BizException("承运商代码或承运商名称不能为空");
     }
 
 }

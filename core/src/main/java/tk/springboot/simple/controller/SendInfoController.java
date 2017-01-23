@@ -4,6 +4,7 @@ package tk.springboot.simple.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.comm.model.SheetBean;
@@ -76,6 +77,7 @@ public class SendInfoController extends BaseController{
                     for(SendInfo sendInfo:sendInfos){
                         String status,errorReason=null;
                         try{
+                            doValid(sendInfo);
                             sendInfoService.save(sendInfo);
                             status=STATUS_SUCCESS;
                             isPartSuccess=true;
@@ -83,7 +85,10 @@ public class SendInfoController extends BaseController{
                             if(!isPartFailed){
                                 isPartFailed=true;
                             }
-                            errorReason="该记录已存在,不可重复上传";
+                            errorReason=DUPLICATED_MESSAGE;
+                            if(ex instanceof BizException){
+                                errorReason=ex.getMessage();
+                            }
                             ex.printStackTrace();
                             status=STATUS_FAILURE;
                         }
@@ -107,9 +112,10 @@ public class SendInfoController extends BaseController{
         return respInfo;
     }
 
-    public void saveUploadResult(JSONArray jsonArray,SendInfo sendInfo,String result){
-        JSONObject jsonObject= (JSONObject) JSON.toJSON(sendInfo);
-        jsonObject.put("status",result);
-        jsonArray.add(jsonObject);
+    private void doValid(SendInfo sendInfo) throws BizException {
+        if(StringUtils.isEmpty(sendInfo.getCode()) || StringUtils.isEmpty(sendInfo.getName()))
+            throw new BizException("客户编码或者客户名称不能为空");
+
     }
+
 }

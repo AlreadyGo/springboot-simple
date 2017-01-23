@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/1/17.
+ * Created by zhou on 2017/1/17.
  */
 @Service
 public class CostInfoService extends BaseService{
@@ -50,9 +50,14 @@ public class CostInfoService extends BaseService{
             Date date=new Date();
             costInfo.setCreateDate(date);
             costInfo.setUpdateDate(date);
-            costInfo.setCostStatus(CostStatus.待提交);
+            if(StringUtils.isEmpty(costInfo.getCostStatus()))
+            costInfo.setCostStatus(CostStatus.可修改);
             costInfoMapper.insert(costInfo);
         }
+    }
+
+    public void rejectCostStatus(CostInfo costInfo) throws BizException {
+        updateCostStatus(CostStatus.待提交,costInfo,"只能拒绝待提交的记录");
     }
 
     public void submitCostStatus(CostInfo costInfo) throws BizException {
