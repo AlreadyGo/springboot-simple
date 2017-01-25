@@ -43,7 +43,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(
                 new GeneralInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login/**","/pull/**","/user/save")
+                .excludePathPatterns("/login/**","/pull/**","/user/save","/user/ifExist/**")
                 ;
     }
 //    @Override

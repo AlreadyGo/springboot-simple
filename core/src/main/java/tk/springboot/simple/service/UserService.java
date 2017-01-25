@@ -70,4 +70,10 @@ public class UserService {
     public List<Permission> pullPermissions(String name){
         return userMapper.pullPermissions(name);
     }
+
+    public boolean ifExist(String name) {
+        User user=new User();
+        user.setName(name);
+        return userMapper.selectCount(user)!=0;
+    }
 }

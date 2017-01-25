@@ -36,6 +36,11 @@ public class UserController extends BaseController{
         return new RespInfo(Consts.SUCCESS_CODE,user);
     }
 
+    @RequestMapping(value = "/ifExist/{name}")
+    public RespInfo ifExist(@PathVariable String name) {
+        return new RespInfo(Consts.SUCCESS_CODE,userService.ifExist(name));
+    }
+
     @RequestMapping(value = "/delete/{id}")
     public RespInfo delete(@PathVariable Integer id) {
         userService.deleteById(id);
