@@ -27,7 +27,7 @@ public class BaseController {
         if(ex instanceof BizException){
             message=ex.getMessage();
         }
-        return new RespInfo(Consts.ERROR_CODE,ex.getMessage(),message);
+        return new RespInfo(Consts.ERROR_CODE,ex.getLocalizedMessage(),message);
     }
 
     public void saveUploadResult(JSONArray jsonArray, Object object, String result, String errorReason){
