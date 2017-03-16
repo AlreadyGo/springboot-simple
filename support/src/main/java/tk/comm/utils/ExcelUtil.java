@@ -16,10 +16,8 @@ import java.util.*;
 /**
  * @author zhou
  * @version V1.0
- * @Description:
+ * @Description:excel解析导出工具类
  * @date 2016/7/27 9:04
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class ExcelUtil {
     private static Logger logger=Logger.getLogger(ExcelUtil.class);
@@ -28,7 +26,7 @@ public class ExcelUtil {
 
     /**
      * 导出excel
-     * @param templateFile 模板文件全路径(导出的excel会保留模板单元格格式等)
+     * @param templateFile 模板文件全路径(导出文件格式按照模板单元格格式,模板数据会被加载的数据覆盖,未曾覆盖层保留)
      * @param saveFile 保存文件全路径
      * @param sheetBeans 数据
      * @throws IOException

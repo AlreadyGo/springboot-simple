@@ -18,10 +18,8 @@ import java.util.Map;
 /**
  * @author zhou
  * @version V1.0
- * @Description:需要配置<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ * @Description:上传下载工具类,需要配置<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
  * @date 2016/7/26 14:01
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class DownUploadUtil {
     private static Logger logger=Logger.getLogger(DownUploadUtil.class);

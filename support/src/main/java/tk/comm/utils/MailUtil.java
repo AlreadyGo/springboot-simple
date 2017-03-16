@@ -16,10 +16,8 @@ import java.util.Properties;
 /**
  * @author zhou
  * @version V1.0
- * @Description:
+ * @Description:发送邮件工具类
  * @date 2016/8/24 15:25
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class MailUtil {
     private static String encoding = "GBK";

@@ -12,10 +12,8 @@ import java.util.List;
 /**
  * @author zhou
  * @version V1.0
- * @Description:
+ * @Description:csv解析导出工具类
  * @date 2016/7/28 9:24
- * @jdk v1.7
- * @tomcat v7.0
  */
 public class CsvUtil {
 

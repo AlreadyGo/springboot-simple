@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author zhou
- * @Description:
+ * @Description:mysql由类生成简单ddl工具
  * @date 2017/1/9 10:37
  * @jdk v1.8
  */

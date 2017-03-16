@@ -2,14 +2,11 @@ package tk.comm.utils;
 import java.security.MessageDigest;
 
 /**
- * 
- * <p>Title: MD5</p> 
- * <p>Description: md5 类实现了RSA Data Security</p> 
- * <p>Copyright: Copyright (c) 2013</p>
- * @author jj
- * @date 2013-4-14
+ * @author zhou
+ * @version V1.0
+ * @Description:md5加密工具类
+ * @date 2016/8/24 15:25
  */
-
 public class MD5Util 
 {
 	/**
