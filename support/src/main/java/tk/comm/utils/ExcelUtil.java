@@ -26,6 +26,13 @@ public class ExcelUtil {
     private static final String XLS="xls";
     private static final String XLSX="xlsx";
 
+    /**
+     * 导出excel
+     * @param templateFile 模板文件全路径(导出的excel会保留模板单元格格式等)
+     * @param saveFile 保存文件全路径
+     * @param sheetBeans 数据
+     * @throws IOException
+     */
     public static void writeExcel(String templateFile,String saveFile,List<SheetBean> sheetBeans) throws IOException {
         createDirs(saveFile);
         OutputStream os=new FileOutputStream(saveFile);
@@ -65,7 +72,7 @@ public class ExcelUtil {
         logger.info("写入sheet数目："+sheetNum);
         for(int sheetIndex=0;sheetIndex<sheetNum;sheetIndex++){
             Sheet sheet=book.getSheetAt(sheetIndex);
-            if(book==null) sheet=book.createSheet();
+            if(sheet==null) sheet=book.createSheet();
             fillRowCell(sheet,sheetBeans.get(sheetIndex));
         }
     }
@@ -128,17 +135,37 @@ public class ExcelUtil {
         return map;
     }
 
-
+    /**
+     * 读取excel
+     * @param fileName 读取文件全路径
+     * @return 单元格数据
+     * @throws IOException
+     */
     public static List<SheetBean> readExcel(String fileName) throws IOException {
         logger.info("读取excel文件:"+fileName);
         String suffix=getSuffix(fileName);
         InputStream is = new FileInputStream(fileName);
         return readExcel(is,suffix);
     }
+
+    /**
+     * 读取excel
+     * @param is 文件输入流
+     * @return 单元格数据
+     * @throws IOException
+     */
     public static List<SheetBean> readExcel(InputStream is) throws IOException {
         return readExcel(is,XLSX);
     }
-    public static List<SheetBean> readExcel(InputStream is,String suffix) throws IOException {
+
+    /**
+     * 读取excel
+     * @param is 文件输入流
+     * @param suffix excel文件后缀(xls,xlsx)
+     * @return
+     * @throws IOException
+     */
+    private static List<SheetBean> readExcel(InputStream is,String suffix) throws IOException {
         Workbook  book = createWorkBook(is,suffix);
         List<SheetBean> sheetBeanList = new ArrayList<SheetBean>();
         int sheetsNumber = book.getNumberOfSheets();
@@ -239,61 +266,5 @@ public class ExcelUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         return sdf.format(date);
     }
-
-
-    public static void main(String[] args) {
-        try {
-            readExcel(new FileInputStream("C:\\Users\\dell\\Desktop\\test.xlsx"),"xlsx");
-//            List<SheetBean> sheetBeans=new ArrayList<SheetBean>();
-//            SheetBean sheetBean=new SheetBean();
-//            sheetBean.setSheetNo(0);
-//            sheetBean.setSheetName("test1");
-//            List<CellBean> cellBeanList=new ArrayList<CellBean>(){
-//                {
-//                    for(int j=1;j<5;j++){
-//                        for(int i=0;i<10;i++){
-//                            CellBean cellBean=new CellBean();
-//                            cellBean.setCellType(1);
-//                            cellBean.setRowNo(j);
-//                            cellBean.setColNo(i);
-//                            cellBean.setCellData("data"+j+""+i);
-//                            add(cellBean);
-//                        }
-//                    }
-//
-//                }
-//
-//            };
-//            sheetBean.setCellBeanList(cellBeanList);
-//
-//            SheetBean sheetBean2=new SheetBean();
-//            sheetBean2.setSheetNo(1);
-//            sheetBean2.setSheetName("test2");
-//            List<CellBean> cellBeanList2=new ArrayList<CellBean>(){
-//                {
-//                    for(int j=0;j<2;j++){
-//                        for(int i=0;i<5;i++){
-//                            CellBean cellBean=new CellBean();
-//                            cellBean.setCellType(1);
-//                            cellBean.setRowNo(j);
-//                            cellBean.setColNo(i);
-//                            cellBean.setCellData("datax"+j+"-"+i);
-//                            add(cellBean);
-//                        }
-//                    }
-//
-//                }
-//
-//            };
-//            sheetBean2.setCellBeanList(cellBeanList2);
-//            sheetBeans.add(sheetBean2);
-//            sheetBeans.add(sheetBean);
-//
-//            writeExcel("D:/test.xlsx","D:/write.xls",sheetBeans);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }

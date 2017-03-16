@@ -6,7 +6,6 @@ import java.security.MessageDigest;
  * <p>Title: MD5</p> 
  * <p>Description: md5 类实现了RSA Data Security</p> 
  * <p>Copyright: Copyright (c) 2013</p>
- * <p>Company: easipay</p>
  * @author jj
  * @date 2013-4-14
  */

@@ -26,6 +26,12 @@ import java.util.Map;
 public class DownUploadUtil {
     private static Logger logger=Logger.getLogger(DownUploadUtil.class);
 
+    /**
+     * 上传
+     * @param request servlet容器中HttpServletRequest对象
+     * @return 上传对象列表
+     * @throws BaseSupportException
+     */
     public static List<UploadFile> upload(HttpServletRequest request) throws BaseSupportException{
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
                 request.getSession().getServletContext());

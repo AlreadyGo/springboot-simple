@@ -13,7 +13,7 @@ public class MailAuthentication {
 
     private  String emailPassword;
     // 发件人邮箱的 SMTP 服务器地址, 必须准确, 不同邮件服务器地址不同, 一般格式为: smtp.xxx.com
-    // 东方支付的 SMTP 服务器地址为: smtp.easipay.net
+    // 163的 SMTP 服务器地址为: smtp.163.net
     private  String emailSMTPHost;
 
     public String getEmailAccount() {
