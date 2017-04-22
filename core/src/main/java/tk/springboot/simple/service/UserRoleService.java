@@ -23,19 +23,19 @@ public class UserRoleService {
     }
 
     public List<UserRole> getById(Integer id) {
-        Example example=new Example(UserRole.class);
-        example.createCriteria().andCondition("uid=",id);
-       return userRoleMapper.selectByExample(example);
+        Example example = new Example(UserRole.class);
+        example.createCriteria().andCondition("uid=", id);
+        return userRoleMapper.selectByExample(example);
     }
 
     public void deleteById(Integer id) {
-        Example example=new Example(UserRole.class);
-        example.createCriteria().andCondition("uid=",id);
+        Example example = new Example(UserRole.class);
+        example.createCriteria().andCondition("uid=", id);
         userRoleMapper.deleteByExample(example);
     }
 
     public void save(UserRole userRole) {
-       userRoleMapper.insert(userRole);
+        userRoleMapper.insert(userRole);
     }
 
     public void saveList(List<UserRole> userRoles) {

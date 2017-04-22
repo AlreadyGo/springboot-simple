@@ -21,20 +21,20 @@ public class BeanUtil {
 
     }
 
-    public static String getBeanName(String bean){
+    public static String getBeanName(String bean) {
         try {
             Class clz = Class.forName(bean);
             String clzStr = clz.toString();
             //得到类名
-            String beanName = clzStr.substring(clzStr.lastIndexOf(".")+1);
-            return beanName.substring(0,1).toLowerCase()+beanName.substring(1);
+            String beanName = clzStr.substring(clzStr.lastIndexOf(".") + 1);
+            return beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return "";
         }
     }
 
-    public static List<String> getBeanPropertyList(String bean){
+    public static List<String> getBeanPropertyList(String bean) {
         try {
             Class clz = Class.forName(bean);
             Field[] strs = clz.getDeclaredFields();
@@ -42,7 +42,7 @@ public class BeanUtil {
             propertyList.add("int`id");
             for (int i = 0; i < strs.length; i++) {
                 String protype = strs[i].getType().toString();
-                propertyList.add(protype.substring(protype.lastIndexOf(".")+1)+"`"+strs[i].getName());
+                propertyList.add(protype.substring(protype.lastIndexOf(".") + 1) + "`" + strs[i].getName());
             }
             return propertyList;
         } catch (ClassNotFoundException e) {
@@ -51,15 +51,15 @@ public class BeanUtil {
         }
     }
 
-    public static String getBeanFilesList(String bean){
+    public static String getBeanFilesList(String bean) {
         try {
             Class clz = Class.forName(bean);
             Field[] strs = clz.getDeclaredFields();
             StringBuffer sb = new StringBuffer();
             for (int i = 0; i < strs.length; i++) {
                 String protype = strs[i].getType().toString();
-                if (!strs[i].getName().equals("tableName")&&!strs[i].getType().equals("List")) {
-                    sb.append(strs[i].getName()+",");
+                if (!strs[i].getName().equals("tableName") && !strs[i].getType().equals("List")) {
+                    sb.append(strs[i].getName() + ",");
                 }
             }
             sb.deleteCharAt(sb.toString().lastIndexOf(","));
@@ -72,16 +72,17 @@ public class BeanUtil {
 
     /**
      * 生成建表語句
+     *
      * @param bean
      * @return
      */
-    public static String genCreateTableSql(String bean){
-        List<String> beanPropertyList =  getBeanPropertyList(bean);
-        StringBuffer sb = new StringBuffer("create table "+camel2Underline(getBeanName(bean))+"(\n");
+    public static String genCreateTableSql(String bean) {
+        List<String> beanPropertyList = getBeanPropertyList(bean);
+        StringBuffer sb = new StringBuffer("create table " + camel2Underline(getBeanName(bean)) + "(\n");
         for (String string : beanPropertyList) {
             String[] propertys = string.split("`");
-            String field=camel2Underline(propertys[1]);
-            if (!field.equals("tableName")&&!field.equals("param")&&!propertys[0].equals("List")) {
+            String field = camel2Underline(propertys[1]);
+            if (!field.equals("tableName") && !field.equals("param") && !propertys[0].equals("List")) {
                 if (field.equals("id")) {
                     sb.append("   id int(11) primary key auto_increment,\n");
                 } else {
@@ -93,7 +94,7 @@ public class BeanUtil {
                         sb.append("   " + field + " double(10,2) ,\n");
                     } else if (propertys[0].equals("Date")) {
                         sb.append("   " + field + " datetime ,\n");
-                    }else{
+                    } else {
                         sb.append("   " + field + " tinyint(2) ,\n");
                     }
                 }
@@ -104,31 +105,33 @@ public class BeanUtil {
         return sb.toString();
     }
 
-    public static String camel2Underline(String param){
-        if (param==null||"".equals(param.trim())){
+    public static String camel2Underline(String param) {
+        if (param == null || "".equals(param.trim())) {
             return "";
         }
-        int len=param.length();
-        StringBuilder sb=new StringBuilder(len);
+        int len = param.length();
+        StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
-            char c=param.charAt(i);
-            if (Character.isUpperCase(c)){
+            char c = param.charAt(i);
+            if (Character.isUpperCase(c)) {
                 sb.append("_");
                 sb.append(Character.toLowerCase(c));
-            }else{
+            } else {
                 sb.append(c);
             }
         }
         return sb.toString();
     }
+
     /**
      * 生成查询语句
+     *
      * @param bean
      * @return
      */
-    public static String genSelectAllSql(String bean){
-        String filesList =  getBeanFilesList(bean);
-        return "select \n "+filesList+" \n from \n wnk_pdt_"+getBeanName(bean)+"";
+    public static String genSelectAllSql(String bean) {
+        String filesList = getBeanFilesList(bean);
+        return "select \n " + filesList + " \n from \n wnk_pdt_" + getBeanName(bean) + "";
     }
 
 }

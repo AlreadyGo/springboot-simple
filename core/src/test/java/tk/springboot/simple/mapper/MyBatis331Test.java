@@ -70,7 +70,7 @@ public class MyBatis331Test {
     }
 
     @Test
-    public void testSelectById(){
+    public void testSelectById() {
         City2 city2 = mapper.selectByCityId(1);
         logger.info(city2.toString());
         Assert.assertNotNull(city2);
@@ -79,9 +79,9 @@ public class MyBatis331Test {
     }
 
     @Test
-    public void testSelectAll(){
+    public void testSelectAll() {
         List<City2> city2List = mapper.selectAll();
-        for(City2 c2 : city2List){
+        for (City2 c2 : city2List) {
             logger.info(c2.toString());
             Assert.assertNotNull(c2);
             Assert.assertNotNull(c2.getCityName());

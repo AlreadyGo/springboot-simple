@@ -1,9 +1,6 @@
-
 package tk.springboot.simple.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.comm.model.SheetBean;
@@ -32,7 +29,7 @@ import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
 @RequestMapping("/orderInfo")
-public class OrderController extends BaseController{
+public class OrderController extends BaseController {
 
     @Autowired
     private OrderService orderService;
@@ -53,73 +50,73 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "/view/{id}")
     public RespInfo view(@PathVariable Integer id) {
         OrderInfo orderInfo = orderService.getById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,orderInfo);
+        return new RespInfo(Consts.SUCCESS_CODE, orderInfo);
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public RespInfo delete(@PathVariable Integer id){
+    public RespInfo delete(@PathVariable Integer id) {
         orderService.deleteById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,null,"删除成功");
+        return new RespInfo(Consts.SUCCESS_CODE, null, "删除成功");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public RespInfo save(@RequestBody OrderInfo orderInfo) {
         String msg = orderInfo.getId() == null ? "添加成功" : "修改成功";
         orderService.save(orderInfo);
-        return new RespInfo(Consts.SUCCESS_CODE,orderInfo,msg);
+        return new RespInfo(Consts.SUCCESS_CODE, orderInfo, msg);
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public RespInfo upload(HttpServletRequest request) throws IOException {
-        List<UploadFile> files= DownUploadUtil.upload(request);
-        RespInfo respInfo=new RespInfo(Consts.SUCCESS_CODE,null,"上传成功");
-        boolean isPartSuccess=false,isPartFailed=false;
-        JSONArray jsonArray=new JSONArray();
-        for(UploadFile file:files){
-                String originalName=file.getOriginalFilename();
-                List<SheetBean> sheetBeans= ExcelUtil.readExcel(file.getInputStream(),originalName.substring(originalName.lastIndexOf(".")+1));
-                List<OrderInfo> orders=UploadExcelRules.parseOrders(sheetBeans);
-                if(orders.size()>0){
-                    for(OrderInfo orderInfo:orders){
-                        String status,errorReason=null;
-                        String code=orderInfo.getCustomerCode(),name=orderInfo.getSender();
-                        try{
-                            if(sendInfoService.get(new SendInfo(code,name))!=null){
-                                orderService.save(orderInfo);
-                                status=STATUS_SUCCESS;
-                                isPartSuccess=true;
-                            }else{
-                                throw new BizException(String.format("客户信息中不存在该客户编号 %s 和客户名称 %s ",code,name));
-                            }
-
-                        } catch (Exception ex){
-                            if(!isPartFailed){
-                                isPartFailed=true;
-                            }
-                            errorReason="该记录已存在,不可重复上传";
-                            if(ex instanceof BizException){
-                                errorReason=ex.getMessage();
-                            }
-                            ex.printStackTrace();
-                            status=STATUS_FAILURE;
+        List<UploadFile> files = DownUploadUtil.upload(request);
+        RespInfo respInfo = new RespInfo(Consts.SUCCESS_CODE, null, "上传成功");
+        boolean isPartSuccess = false, isPartFailed = false;
+        JSONArray jsonArray = new JSONArray();
+        for (UploadFile file : files) {
+            String originalName = file.getOriginalFilename();
+            List<SheetBean> sheetBeans = ExcelUtil.readExcel(file.getInputStream(), originalName.substring(originalName.lastIndexOf(".") + 1));
+            List<OrderInfo> orders = UploadExcelRules.parseOrders(sheetBeans);
+            if (orders.size() > 0) {
+                for (OrderInfo orderInfo : orders) {
+                    String status, errorReason = null;
+                    String code = orderInfo.getCustomerCode(), name = orderInfo.getSender();
+                    try {
+                        if (sendInfoService.get(new SendInfo(code, name)) != null) {
+                            orderService.save(orderInfo);
+                            status = STATUS_SUCCESS;
+                            isPartSuccess = true;
+                        } else {
+                            throw new BizException(String.format("客户信息中不存在该客户编号 %s 和客户名称 %s ", code, name));
                         }
-                        saveUploadResult(jsonArray,orderInfo,status,errorReason);
+
+                    } catch (Exception ex) {
+                        if (!isPartFailed) {
+                            isPartFailed = true;
+                        }
+                        errorReason = "该记录已存在,不可重复上传";
+                        if (ex instanceof BizException) {
+                            errorReason = ex.getMessage();
+                        }
+                        ex.printStackTrace();
+                        status = STATUS_FAILURE;
                     }
-                    if(isPartSuccess && isPartFailed){
-                        respInfo.setMessage("部分上传成功");
-                    }
-                    if(!isPartSuccess && isPartFailed){
-                        respInfo.setMessage("上传失败");
-                        respInfo.setStatus(Consts.ERROR_CODE);
-                    }
-                }else{
-                    respInfo.setStatus(Consts.ERROR_CODE);
-                    respInfo.setMessage("上传失败");
+                    saveUploadResult(jsonArray, orderInfo, status, errorReason);
                 }
+                if (isPartSuccess && isPartFailed) {
+                    respInfo.setMessage("部分上传成功");
+                }
+                if (!isPartSuccess && isPartFailed) {
+                    respInfo.setMessage("上传失败");
+                    respInfo.setStatus(Consts.ERROR_CODE);
+                }
+            } else {
+                respInfo.setStatus(Consts.ERROR_CODE);
+                respInfo.setMessage("上传失败");
+            }
 
         }
-        if(jsonArray.size()>0){
-            uploadResultService.save(new UploadResult(new Date(),jsonArray.toJSONString(),UploadType.ORDER));
+        if (jsonArray.size() > 0) {
+            uploadResultService.save(new UploadResult(new Date(), jsonArray.toJSONString(), UploadType.ORDER));
         }
         return respInfo;
     }

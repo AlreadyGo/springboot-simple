@@ -17,6 +17,7 @@ public class RespInfo {
         this.content = content;
         this.message = message;
     }
+
     public RespInfo(Integer status, Object content) {
         this.status = status;
         this.content = content;

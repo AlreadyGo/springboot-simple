@@ -7,7 +7,7 @@ import java.util.Date;
  * @Description:
  * @date 2017/1/6 9:58
  */
-public class SendInfo extends BaseEntity{
+public class SendInfo extends BaseEntity {
     private String code;//客户编码
     private String name;//客户名称
     private String accountMeasure;//结算标准量

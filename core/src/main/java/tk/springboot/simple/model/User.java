@@ -9,7 +9,7 @@ import java.util.Date;
  * @Description:
  * @date 2016/12/26 14:09
  */
-public class User  extends BaseEntity{
+public class User extends BaseEntity {
     private String name;
     private String password;
     private String email;

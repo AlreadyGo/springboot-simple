@@ -7,7 +7,7 @@ import tk.springboot.simple.model.enums.PermissionType;
  * @Description:
  * @date 2016/12/26 14:17
  */
-public class Permission extends BaseEntity{
+public class Permission extends BaseEntity {
     private String name;
     private PermissionType permissionType;
     private String value;

@@ -24,21 +24,21 @@ public class CsvUtil {
         return list;
     }
 
-    public static void writeCsv(String fileName,List<String[]> data) throws IOException {
+    public static void writeCsv(String fileName, List<String[]> data) throws IOException {
         CSVWriter csvWriter = new CSVWriter(new FileWriter(fileName), ',');
-        for(String[] ss:data){
+        for (String[] ss : data) {
             csvWriter.writeNext(ss);
         }
         csvWriter.close();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
 //            readCsv("d:\\test.csv");
-            List<String[]> data=new ArrayList<String[]>();
-            data.add(new String[]{"a","b","c"});
-            data.add(new String[]{"1","2","3"});
-            writeCsv("d:\\1.csv",data);
+            List<String[]> data = new ArrayList<String[]>();
+            data.add(new String[]{"a", "b", "c"});
+            data.add(new String[]{"1", "2", "3"});
+            writeCsv("d:\\1.csv", data);
         } catch (IOException e) {
             e.printStackTrace();
         }

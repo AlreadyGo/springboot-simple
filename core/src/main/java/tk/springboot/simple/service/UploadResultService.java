@@ -15,7 +15,7 @@ import java.util.List;
  * @jdk v1.8
  */
 @Service
-public class UploadResultService extends BaseService{
+public class UploadResultService extends BaseService {
     @Autowired
     private UploadResultMapper uploadResultMapper;
 
@@ -29,9 +29,9 @@ public class UploadResultService extends BaseService{
     }
 
     public List<UploadResult> getByType(UploadResult uploadResult) {
-        String sort=uploadResult.getSort(),order=uploadResult.getOrder();
-        Integer dateRange=uploadResult.getDateRange();
-        Example example=createDateRangeExample(UploadResult.class,order,sort,dateRange,"upload_type="+uploadResult.getUploadType().ordinal());
+        String sort = uploadResult.getSort(), order = uploadResult.getOrder();
+        Integer dateRange = uploadResult.getDateRange();
+        Example example = createDateRangeExample(UploadResult.class, order, sort, dateRange, "upload_type=" + uploadResult.getUploadType().ordinal());
         return uploadResultMapper.selectByExample(example);
     }
 
@@ -48,7 +48,7 @@ public class UploadResultService extends BaseService{
     }
 
     public void saveList(List<UploadResult> uploadResults) {
-            uploadResultMapper.insertList(uploadResults);
+        uploadResultMapper.insertList(uploadResults);
     }
 
 

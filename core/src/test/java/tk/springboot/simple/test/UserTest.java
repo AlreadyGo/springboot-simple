@@ -31,15 +31,15 @@ public class UserTest {
     private UserService userService;
 
     @Test
-    public void userSave(){
-        for(int i=0;i<20;i++){
-            User user=new User();
+    public void userSave() {
+        for (int i = 0; i < 20; i++) {
+            User user = new User();
             user.setLastLogin(new Date());
             user.setCreateDate(new Date());
-            user.setPassword("password"+i);
-            user.setName("name"+i);
+            user.setPassword("password" + i);
+            user.setName("name" + i);
             user.setStatus(Status.VALID);
-            user.setEmail("email@address"+i);
+            user.setEmail("email@address" + i);
             userService.save(user);
         }
 

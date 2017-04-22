@@ -29,12 +29,12 @@ public class RoleTest {
     private RoleService roleService;
 
     @Test
-    public void roleSave(){
-        for(int i=0;i<10;i++){
-            Role role=new Role();
+    public void roleSave() {
+        for (int i = 0; i < 10; i++) {
+            Role role = new Role();
             role.setStatus(Status.VALID);
-            role.setName("role"+i);
-            role.setDescription("desc"+i);
+            role.setName("role" + i);
+            role.setDescription("desc" + i);
             roleService.save(role);
         }
 

@@ -20,25 +20,25 @@ import java.util.concurrent.ExecutionException;
  * @jdk v1.8
  */
 @RestController
-public class LoginController extends BaseController{
+public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/login/{timestamp}")
     public RespInfo login(@RequestBody User user, @PathVariable String timestamp) {
-        User u=userService.getByNamePwd(user);
-        int code= Consts.ERROR_CODE;
-        if(u!=null){
-            code= Consts.SUCCESS_CODE;
-            String username=user.getName();
-            CacheUtil.putCache(username+timestamp,userService.pullPermissions(username));
+        User u = userService.getByNamePwd(user);
+        int code = Consts.ERROR_CODE;
+        if (u != null) {
+            code = Consts.SUCCESS_CODE;
+            String username = user.getName();
+            CacheUtil.putCache(username + timestamp, userService.pullPermissions(username));
         }
-       return new RespInfo(code,u,null);
+        return new RespInfo(code, u, null);
     }
 
     @RequestMapping(value = "/pull/{key}")
     public RespInfo pull(@PathVariable String key) throws ExecutionException {
 
-       return new RespInfo(Consts.SUCCESS_CODE, CacheUtil.getCache(key),null);
+        return new RespInfo(Consts.SUCCESS_CODE, CacheUtil.getCache(key), null);
     }
 }

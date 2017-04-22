@@ -29,17 +29,17 @@ public class PermissionTest {
     private PermissionService permissionService;
 
     @Test
-    public void userSave(){
-        for(int i=0;i<44;i++){
-            Permission permission=new Permission();
-            permission.setName("name"+i);
-            PermissionType permissionType=null;
-            if(i%4==0) permissionType=PermissionType.BUTTON;
-            if(i%4==1) permissionType=PermissionType.MENU1ST;
-            if(i%4==2) permissionType=PermissionType.MENU2ND;
+    public void userSave() {
+        for (int i = 0; i < 44; i++) {
+            Permission permission = new Permission();
+            permission.setName("name" + i);
+            PermissionType permissionType = null;
+            if (i % 4 == 0) permissionType = PermissionType.BUTTON;
+            if (i % 4 == 1) permissionType = PermissionType.MENU1ST;
+            if (i % 4 == 2) permissionType = PermissionType.MENU2ND;
             permission.setPermissionType(permissionType);
-            permission.setValue("value"+i);
-            permission.setUrl("url"+i);
+            permission.setValue("value" + i);
+            permission.setUrl("url" + i);
             permissionService.save(permission);
         }
 

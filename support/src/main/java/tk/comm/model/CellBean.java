@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @jdk v1.7
  * @tomcat v7.0
  */
-public class CellBean implements Serializable{
+public class CellBean implements Serializable {
     private Integer rowNo;//行号
 
     private Integer colNo;//列号

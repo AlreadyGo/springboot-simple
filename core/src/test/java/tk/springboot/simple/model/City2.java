@@ -41,20 +41,20 @@ public class City2 {
 
     private Status status;
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public City2() {
     }
 
     public City2(String cityName, String cityState) {
         this.cityName = cityName;
         this.cityState = cityState;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Integer getId() {

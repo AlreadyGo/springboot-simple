@@ -15,17 +15,17 @@ import java.util.List;
  * @date 2016/12/26 15:05
  */
 @Service
-public class OrderService extends BaseService{
+public class OrderService extends BaseService {
     @Autowired
     private OrderMapper orderBeanMapper;
 
     public List<OrderInfo> getAll(OrderInfo orderBean) {
-        String sort=orderBean.getSort(),order=orderBean.getOrder(),orderNum=orderBean.getOrderNum(),orderNumCondition="";
-        Integer dateRange=orderBean.getDateRange();
-        if(!StringUtils.isEmpty(orderNum)){
-            orderNumCondition=String.format("order_num='%s'",orderNum);
+        String sort = orderBean.getSort(), order = orderBean.getOrder(), orderNum = orderBean.getOrderNum(), orderNumCondition = "";
+        Integer dateRange = orderBean.getDateRange();
+        if (!StringUtils.isEmpty(orderNum)) {
+            orderNumCondition = String.format("order_num='%s'", orderNum);
         }
-        return orderBeanMapper.selectByExample(createDateRangeExample(OrderInfo.class,order,sort,dateRange,orderNumCondition));
+        return orderBeanMapper.selectByExample(createDateRangeExample(OrderInfo.class, order, sort, dateRange, orderNumCondition));
     }
 
     public OrderInfo getById(Integer id) {
@@ -37,7 +37,7 @@ public class OrderService extends BaseService{
     }
 
     public void save(OrderInfo orderBean) {
-        Date date=new Date();
+        Date date = new Date();
         orderBean.setUpdateDate(date);
         if (orderBean.getId() != null) {
             orderBeanMapper.updateByPrimaryKey(orderBean);
@@ -46,12 +46,14 @@ public class OrderService extends BaseService{
             orderBeanMapper.insert(orderBean);
         }
     }
-    public int getCount(OrderInfo orderBean){
+
+    public int getCount(OrderInfo orderBean) {
         return orderBeanMapper.selectCount(orderBean);
     }
 
-    public OrderInfo getOrderInfoByNum(String orderNum){
-        OrderInfo orderInfo=new OrderInfo();orderInfo.setOrderNum(orderNum);
+    public OrderInfo getOrderInfoByNum(String orderNum) {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrderNum(orderNum);
         return orderBeanMapper.selectOne(orderInfo);
     }
 }

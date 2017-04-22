@@ -1,6 +1,5 @@
 package tk.springboot.simple.model;
 
-import tk.springboot.simple.model.enums.Status;
 import tk.springboot.simple.model.enums.UploadType;
 
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
  * @date 2017/1/9 10:39
  * @jdk v1.8
  */
-public class UploadResult extends BaseEntity{
+public class UploadResult extends BaseEntity {
     private Date createDate;
     private String detail;
     private UploadType uploadType;
@@ -24,7 +23,6 @@ public class UploadResult extends BaseEntity{
         this.detail = detail;
         this.uploadType = uploadType;
     }
-
 
 
     public Date getCreateDate() {

@@ -24,21 +24,22 @@ public class RolePermissionService {
     }
 
     public List<RolePermission> getById(Integer id) {
-        Example example=new Example(Role.class);
-        example.createCriteria().andCondition("rid=",id);
+        Example example = new Example(Role.class);
+        example.createCriteria().andCondition("rid=", id);
         return rolePermissionMapper.selectByExample(example);
     }
 
     public void deleteById(Integer roleId) {
-        Example example=new Example(Role.class);
-        example.createCriteria().andCondition("rid=",roleId);
+        Example example = new Example(Role.class);
+        example.createCriteria().andCondition("rid=", roleId);
         rolePermissionMapper.deleteByExample(example);
     }
 
-    public void saveList(List<RolePermission> rolePermissions){
+    public void saveList(List<RolePermission> rolePermissions) {
         rolePermissionMapper.insertList(rolePermissions);
     }
+
     public void save(RolePermission rolePermission) {
-       rolePermissionMapper.insert(rolePermission);
+        rolePermissionMapper.insert(rolePermission);
     }
 }

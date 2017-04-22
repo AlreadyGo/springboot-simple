@@ -6,7 +6,7 @@
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+                   value="%p [%t] %c{1}.%M(%L) | %m%n"/>
         </layout>
     </appender>
 
@@ -22,37 +22,37 @@
     <logger name="org.dbunit">
         <level value="WARN"/>
     </logger>
-    
+
     <logger name="com.ibatis" additivity="true">
-	  <level value="DEBUG" />
-	</logger>
-	 
-	<logger name="java.sql.Connection" additivity="true">
-	  <level value="DEBUG" />
-	</logger>
-	
-	<logger name="java.sql.Statement" additivity="true">     
-	   <level value="DEBUG" />     
-	</logger>  
-	   
-	<logger name="java.sql.PreparedStatement" additivity="true">     
-	   <level value="DEBUG" />     
-	</logger>   
-	 
-	<logger name="java.sql.ResultSet" additivity="true">
-	  <level value="DEBUG" />
-	</logger>
-    
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="DEBUG"/>
+    </logger>
+
+    <logger name="java.sql.ResultSet" additivity="true">
+        <level value="DEBUG"/>
+    </logger>
+
     <logger name="org.springframework">
         <level value="WARN"/>
     </logger>
-    
+
     <!--<logger name="net.easipay.pnp">-->
-        <!--<level value="DEBUG"/>-->
+    <!--<level value="DEBUG"/>-->
     <!--</logger>-->
 
     <!--<logger name="net.easipay.pnp.tool">-->
-        <!--<level value="INFO"/>-->
+    <!--<level value="INFO"/>-->
     <!--</logger>-->
 
     <root>

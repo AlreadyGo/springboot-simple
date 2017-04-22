@@ -1,3 +1,8 @@
+# 描述:
+
+> 此项目实现前后端分离,做法比较简单,技术栈为spring-boot,spring-mvc,mybatis,common-mapper等,
+提供了一个了用户权限控制以及curd的简单快速开发模板
+
 # frontend
 
 > A Vue.js+webpack project [vue-simple](http://github.com/alreadygo/vue-simple)

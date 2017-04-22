@@ -6,7 +6,6 @@ import tk.comm.model.CellBean;
 import tk.comm.model.SheetBean;
 import tk.comm.utils.ExcelUtil;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import static tk.comm.utils.ExcelUtil.readExcel;
 public class ExcelTest {
     @Test
     public void writeExcelTest() {
-        try{
+        try {
             List<SheetBean> sheetBeans = new ArrayList<SheetBean>();
             SheetBean sheetBean = new SheetBean();
             sheetBean.setSheetNo(0);
@@ -66,17 +65,17 @@ public class ExcelTest {
             sheetBeans.add(sheetBean);
 
             ExcelUtil.writeExcel("", "./write.xls", sheetBeans);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void readExcelTest(){
+    public void readExcelTest() {
         try {
-            List<SheetBean> sheetBeans=readExcel("./write.xls");
+            List<SheetBean> sheetBeans = readExcel("./write.xls");
             //sheetBeans=readExcel(new FileInputStream("./write.xls"));
-            Assert.assertTrue(sheetBeans.size()==2);
+            Assert.assertTrue(sheetBeans.size() == 2);
         } catch (IOException e) {
             e.printStackTrace();
         }

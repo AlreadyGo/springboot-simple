@@ -20,8 +20,8 @@ public class PersonalInfo extends BaseEntity {
     private String serviceAbility;//服务能力
     private String address;//联系地址
     private String description;//备注
-    private Date   createDate;
-    private Date   updateDate;
+    private Date createDate;
+    private Date updateDate;
 
     public Date getCreateDate() {
         return createDate;

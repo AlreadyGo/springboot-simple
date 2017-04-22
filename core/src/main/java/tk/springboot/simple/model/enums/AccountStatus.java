@@ -7,5 +7,5 @@ package tk.springboot.simple.model.enums;
  * @jdk v1.8
  */
 public enum AccountStatus {
-    可修改,不可修改
+    可修改, 不可修改
 }

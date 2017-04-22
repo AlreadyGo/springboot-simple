@@ -12,7 +12,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @Configuration
 public class GeneralConfig {
     @Bean
-    public CommonsMultipartResolver commonsMultipartResolver(){
+    public CommonsMultipartResolver commonsMultipartResolver() {
         return new CommonsMultipartResolver();
     }
 }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -27,70 +27,73 @@ public class UserController extends BaseController{
 
     @RequestMapping("/all")
     public List<User> getAll() {
-        return userService.getAll().stream().map(u->{u.setPassword(""); return u;}).collect(Collectors.toList());
+        return userService.getAll().stream().map(u -> {
+            u.setPassword("");
+            return u;
+        }).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/view/{id}")
     public RespInfo view(@PathVariable Integer id) {
         User user = userService.getById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,user);
+        return new RespInfo(Consts.SUCCESS_CODE, user);
     }
 
     @RequestMapping(value = "/ifExist/{name}")
     public RespInfo ifExist(@PathVariable String name) {
-        return new RespInfo(Consts.SUCCESS_CODE,userService.ifExist(name));
+        return new RespInfo(Consts.SUCCESS_CODE, userService.ifExist(name));
     }
 
     @RequestMapping(value = "/delete/{id}")
     public RespInfo delete(@PathVariable Integer id) {
         userService.deleteById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,null,"删除成功");
+        return new RespInfo(Consts.SUCCESS_CODE, null, "删除成功");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public RespInfo save(@RequestBody User user) {
         String msg = user.getId() == null ? "注册成功" : "修改成功";
         userService.save(user);
-        return new RespInfo(Consts.SUCCESS_CODE,user,msg);
+        return new RespInfo(Consts.SUCCESS_CODE, user, msg);
     }
 
     @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
     public RespInfo updateStatus(@RequestBody User user) {
-        String message=user.getStatus().equals(Status.VALID)?"启用成功":"禁用成功";
+        String message = user.getStatus().equals(Status.VALID) ? "启用成功" : "禁用成功";
         userService.updateStatus(user);
-        return new RespInfo(Consts.SUCCESS_CODE,null,message);
+        return new RespInfo(Consts.SUCCESS_CODE, null, message);
     }
 
     @RequestMapping(value = "/updatePassword/{origin}", method = RequestMethod.POST)
-    public RespInfo updatePassword(@RequestBody User user,@PathVariable("origin") String origin) {
-        boolean isSuccess=false;
-        if(userService.checkPassword(user.getName(),origin) && userService.updatePasswordByName(user)==1){
-            isSuccess=true;
+    public RespInfo updatePassword(@RequestBody User user, @PathVariable("origin") String origin) {
+        boolean isSuccess = false;
+        if (userService.checkPassword(user.getName(), origin) && userService.updatePasswordByName(user) == 1) {
+            isSuccess = true;
         }
-        return new RespInfo(Consts.SUCCESS_CODE,isSuccess,"");
+        return new RespInfo(Consts.SUCCESS_CODE, isSuccess, "");
     }
 
     @RequestMapping(value = "/dispatch", method = RequestMethod.POST)
     public RespInfo dispatch(@RequestBody DispatchView dispatchView) {
-        Long userId=dispatchView.getId();
+        Long userId = dispatchView.getId();
         userRoleService.deleteById(userId.intValue());
-        List<UserRole> userRoles=new ArrayList<>();
+        List<UserRole> userRoles = new ArrayList<>();
         UserRole userRole;
-        Long[] subIds=dispatchView.getSubIds();
-        if(subIds.length>0){
-            for(Long sid:subIds){
-                userRole=new UserRole();
+        Long[] subIds = dispatchView.getSubIds();
+        if (subIds.length > 0) {
+            for (Long sid : subIds) {
+                userRole = new UserRole();
                 userRole.setUid(userId);
                 userRole.setRid(sid);
                 userRoles.add(userRole);
             }
             userRoleService.saveList(userRoles);
         }
-        return new RespInfo(Consts.SUCCESS_CODE,null,"配置成功");
+        return new RespInfo(Consts.SUCCESS_CODE, null, "配置成功");
     }
 
     @RequestMapping(value = "/getRolesByUid/{uid}")
     public RespInfo getRolesByUid(@PathVariable Integer uid) {
-        return new RespInfo(Consts.SUCCESS_CODE,userRoleService.getById(uid),null);
+        return new RespInfo(Consts.SUCCESS_CODE, userRoleService.getById(uid), null);
     }
 }

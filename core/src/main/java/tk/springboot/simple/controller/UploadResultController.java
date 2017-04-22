@@ -3,7 +3,9 @@ package tk.springboot.simple.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tk.springboot.simple.model.UploadResult;
 import tk.springboot.simple.model.enums.UploadType;
 import tk.springboot.simple.service.UploadResultService;
@@ -17,7 +19,7 @@ import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
 @RequestMapping("/uploadResult")
-public class UploadResultController extends BaseController{
+public class UploadResultController extends BaseController {
 
     @Autowired
     private UploadResultService uploadResultService;
@@ -28,22 +30,22 @@ public class UploadResultController extends BaseController{
     }
 
     @RequestMapping(value = "/view/{uploadType}")
-    public Object view(@PathVariable UploadType uploadType,UploadResult uploadResultView) {
-        List<JSONObject> list=new ArrayList<>();
+    public Object view(@PathVariable UploadType uploadType, UploadResult uploadResultView) {
+        List<JSONObject> list = new ArrayList<>();
         uploadResultView.setUploadType(uploadType);
         List<UploadResult> uploadResults = uploadResultService.getByType(uploadResultView);
-        if(uploadResults.size()>0){
-            for(UploadResult uploadResult:uploadResults){
-                Date date=uploadResult.getCreateDate();
-                JSON.parseArray(uploadResult.getDetail()).stream().forEach(o->{
-                    JSONObject per=(JSONObject)o;
-                    per.put("createDate",date);
+        if (uploadResults.size() > 0) {
+            for (UploadResult uploadResult : uploadResults) {
+                Date date = uploadResult.getCreateDate();
+                JSON.parseArray(uploadResult.getDetail()).stream().forEach(o -> {
+                    JSONObject per = (JSONObject) o;
+                    per.put("createDate", date);
                     list.add(per);
                 });
 
             }
         }
-        return list.stream().filter(o->!o.getString("status").equals(STATUS_SUCCESS)).collect(Collectors.toList());
+        return list.stream().filter(o -> !o.getString("status").equals(STATUS_SUCCESS)).collect(Collectors.toList());
     }
 
 

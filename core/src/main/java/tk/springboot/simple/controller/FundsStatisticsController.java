@@ -11,7 +11,7 @@ import tk.springboot.simple.util.Consts;
  */
 @RestController
 @RequestMapping("/fundsStatistics")
-public class FundsStatisticsController  extends BaseController{
+public class FundsStatisticsController extends BaseController {
 
     @Autowired
     private tk.springboot.simple.service.FundsStatisticsInfoService FundsStatisticsInfoService;
@@ -19,7 +19,7 @@ public class FundsStatisticsController  extends BaseController{
 
     @RequestMapping("/all")
     public RespInfo getAll(FundsStatisticsInfo FundsStatisticsInfo) throws Exception {
-        RespInfo res=new RespInfo(Consts.SUCCESS_CODE, FundsStatisticsInfoService.getAll(FundsStatisticsInfo));
+        RespInfo res = new RespInfo(Consts.SUCCESS_CODE, FundsStatisticsInfoService.getAll(FundsStatisticsInfo));
 
         return res;
 
@@ -28,20 +28,20 @@ public class FundsStatisticsController  extends BaseController{
     @RequestMapping(value = "/view/{id}")
     public RespInfo view(@PathVariable Integer id) {
         FundsStatisticsInfo FundsStatisticsInfo = FundsStatisticsInfoService.getById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,FundsStatisticsInfo);
+        return new RespInfo(Consts.SUCCESS_CODE, FundsStatisticsInfo);
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public RespInfo delete(@PathVariable Integer id){
+    public RespInfo delete(@PathVariable Integer id) {
         FundsStatisticsInfoService.deleteById(id);
-        return new RespInfo(Consts.SUCCESS_CODE,null,"删除成功");
+        return new RespInfo(Consts.SUCCESS_CODE, null, "删除成功");
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public RespInfo save(@RequestBody FundsStatisticsInfo FundsStatisticsInfo) {
         String msg = FundsStatisticsInfo.getId() == null ? "添加成功" : "修改成功";
         FundsStatisticsInfoService.save(FundsStatisticsInfo);
-        return new RespInfo(Consts.SUCCESS_CODE,FundsStatisticsInfo,msg);
+        return new RespInfo(Consts.SUCCESS_CODE, FundsStatisticsInfo, msg);
     }
 
 }

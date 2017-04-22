@@ -18,7 +18,7 @@ public class MailInfo {
     private String subject;
     private String content;
     private File[] attachments;
-    private Date createTime=new Date();
+    private Date createTime = new Date();
 
     public File[] getAttachments() {
         return attachments;

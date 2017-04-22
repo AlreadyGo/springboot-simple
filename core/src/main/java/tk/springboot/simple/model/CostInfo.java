@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/1/16.
  */
-public class CostInfo extends BaseEntity{
+public class CostInfo extends BaseEntity {
     private String orderNum;//订单号
     private String transportWay;//运输方式
     private String receivingWay;//提货方式

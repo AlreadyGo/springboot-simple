@@ -1,8 +1,8 @@
 package tk.comm.utils;
 
+import org.apache.log4j.Logger;
 import tk.comm.model.MailAuthentication;
 import tk.comm.model.MailInfo;
-import org.apache.log4j.Logger;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -81,7 +81,7 @@ public class MailUtil {
         MimeBodyPart part;
         if (attachments != null && attachments.length > 0) {
             for (File file : attachments) {
-                if(file!=null){
+                if (file != null) {
                     part = new MimeBodyPart();
                     part.attachFile(file);
                     part.setFileName(file.getName());

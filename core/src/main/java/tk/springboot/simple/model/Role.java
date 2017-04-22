@@ -7,7 +7,7 @@ import tk.springboot.simple.model.enums.Status;
  * @Description:
  * @date 2016/12/26 14:12
  */
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
     private String name;
     private String description;
     private Status status;

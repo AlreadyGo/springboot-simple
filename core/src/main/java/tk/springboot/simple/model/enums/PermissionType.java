@@ -6,5 +6,5 @@ package tk.springboot.simple.model.enums;
  * @date 2016/12/26 14:18
  */
 public enum PermissionType {
-    MENU1ST,MENU2ND,BUTTON
+    MENU1ST, MENU2ND, BUTTON
 }

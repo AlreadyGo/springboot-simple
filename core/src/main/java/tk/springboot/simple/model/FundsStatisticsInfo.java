@@ -6,16 +6,16 @@ import java.util.Date;
  * Created by Administrator on 2017/1/18.
  */
 public class FundsStatisticsInfo extends BaseEntity {
-    private Date  paymentDate;//付款日期
+    private Date paymentDate;//付款日期
     private String orderNum;//订单号
-    private String discountNetting ;//回扣冲低
-    private String  paidTrunk;//已付款
-    private String  balancesTrunk;//余额款
-    private String  clearingForm;//结算方式
-    private String  paidShort;//已付款
-    private String  balancesShort;//余额款
-    private String  rebateAmount;//回扣金额
-    private String  chargeSituation;//收款情况
+    private String discountNetting;//回扣冲低
+    private String paidTrunk;//已付款
+    private String balancesTrunk;//余额款
+    private String clearingForm;//结算方式
+    private String paidShort;//已付款
+    private String balancesShort;//余额款
+    private String rebateAmount;//回扣金额
+    private String chargeSituation;//收款情况
     private Date createDate;
     private Date updateDate;
 

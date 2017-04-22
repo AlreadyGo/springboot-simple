@@ -6,6 +6,6 @@ package tk.springboot.simple.model.enums;
  * @date 2017/1/6 11:02
  * @jdk v1.8
  */
-public enum  UploadType {
-    SENDINFO,DELIVERYMANINFO,PERSONALINFO,ORDER
+public enum UploadType {
+    SENDINFO, DELIVERYMANINFO, PERSONALINFO, ORDER
 }

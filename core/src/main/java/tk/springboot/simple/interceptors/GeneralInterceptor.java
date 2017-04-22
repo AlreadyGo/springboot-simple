@@ -22,35 +22,37 @@ import java.util.List;
  * @date 2016/12/29 14:04
  */
 public class GeneralInterceptor extends HandlerInterceptorAdapter {
+    private static Logger logger = Logger.getLogger(GeneralInterceptor.class);
     private AntPathMatcher matcher = new AntPathMatcher();
-    private static Logger logger=Logger.getLogger(GeneralInterceptor.class);
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uri=request.getRequestURI(),userCookie;
-        boolean isSuccess=false;
-        if((userCookie=parseUserCookie(request.getHeader("cookie")))!=null){
-            JSONObject object=JSON.parseObject(userCookie);
-            Object cache= CacheUtil.getCache(object.getString("name")+object.getString("timestamp"));
-            if(cache!=null){
-                List<Permission> permissionList= (List<Permission>)cache;
-                for(Permission permission:permissionList){
-                    if(matcher.match(permission.getUrl(),uri)){
-                        isSuccess= true;
+        String uri = request.getRequestURI(), userCookie;
+        boolean isSuccess = false;
+        if ((userCookie = parseUserCookie(request.getHeader("cookie"))) != null) {
+            JSONObject object = JSON.parseObject(userCookie);
+            Object cache = CacheUtil.getCache(object.getString("name") + object.getString("timestamp"));
+            if (cache != null) {
+                List<Permission> permissionList = (List<Permission>) cache;
+                for (Permission permission : permissionList) {
+                    if (matcher.match(permission.getUrl(), uri)) {
+                        isSuccess = true;
                     }
                 }
             }
         }
-        logger.info(String.format("uri:%s,%s",uri,isSuccess));
+        logger.info(String.format("uri:%s,%s", uri, isSuccess));
         return isSuccess;
     }
-    private String parseUserCookie(String cookie){
-        if(!StringUtils.isEmpty(cookie)){
-            String[] s= cookie.split(";");
-            for(String ss:s){
-                String[] sss=ss.split("=");
-                if("user".equals(sss[0].trim())){
+
+    private String parseUserCookie(String cookie) {
+        if (!StringUtils.isEmpty(cookie)) {
+            String[] s = cookie.split(";");
+            for (String ss : s) {
+                String[] sss = ss.split("=");
+                if ("user".equals(sss[0].trim())) {
                     try {
-                        return URLDecoder.decode(sss[1],"utf-8");
+                        return URLDecoder.decode(sss[1], "utf-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }

@@ -33,7 +33,7 @@ public class FundsAppController extends BaseController {
 
     @RequestMapping(value = "/checkCostStatus", method = RequestMethod.POST)
     public RespInfo checkCostStatus(@RequestBody CostInfo costInfo) throws BizException {
-        FundsStatisticsInfo fsi=new FundsStatisticsInfo();
+        FundsStatisticsInfo fsi = new FundsStatisticsInfo();
         fsi.setOrderNum(costInfo.getOrderNum());
         fundsStatisticsInfoService.save(fsi);
         costInfoService.checkCostStatus(costInfo);

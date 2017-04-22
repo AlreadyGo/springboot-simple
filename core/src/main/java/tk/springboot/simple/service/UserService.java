@@ -46,34 +46,34 @@ public class UserService {
         }
     }
 
-    public void updateStatus(User user){
-     userMapper.updateStatus(user);
+    public void updateStatus(User user) {
+        userMapper.updateStatus(user);
     }
 
-    public int updatePasswordByName(User user){
-        Example example=new Example(User.class);
-        example.createCriteria().andCondition("name=",user.getName());
+    public int updatePasswordByName(User user) {
+        Example example = new Example(User.class);
+        example.createCriteria().andCondition("name=", user.getName());
         user.setUpdateDate(new Date());
-        return userMapper.updateByExampleSelective(user,example);
+        return userMapper.updateByExampleSelective(user, example);
     }
 
-    public boolean checkPassword(String name,String password){
-        Example example=new Example(User.class);
-        example.createCriteria().andCondition("name=",name).andCondition("password=",password);
-        return userMapper.selectCountByExample(example)==1?true:false;
+    public boolean checkPassword(String name, String password) {
+        Example example = new Example(User.class);
+        example.createCriteria().andCondition("name=", name).andCondition("password=", password);
+        return userMapper.selectCountByExample(example) == 1;
     }
 
-    public User getByNamePwd(User user){
+    public User getByNamePwd(User user) {
         return userMapper.selectOne(user);
     }
 
-    public List<Permission> pullPermissions(String name){
+    public List<Permission> pullPermissions(String name) {
         return userMapper.pullPermissions(name);
     }
 
     public boolean ifExist(String name) {
-        User user=new User();
+        User user = new User();
         user.setName(name);
-        return userMapper.selectCount(user)!=0;
+        return userMapper.selectCount(user) != 0;
     }
 }

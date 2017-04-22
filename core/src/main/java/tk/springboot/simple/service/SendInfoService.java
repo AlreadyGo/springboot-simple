@@ -14,17 +14,17 @@ import java.util.List;
  * @date 2016/12/26 15:05
  */
 @Service
-public class SendInfoService extends BaseService{
+public class SendInfoService extends BaseService {
     @Autowired
     private SendInfoMapper sendInfoMapper;
 
     public List<SendInfo> getAll(SendInfo sendInfo) {
-        String sort=sendInfo.getSort(),order=sendInfo.getOrder();
-        Integer dateRange=sendInfo.getDateRange();
-        return sendInfoMapper.selectByExample(createDateRangeExample(SendInfo.class,order,sort,dateRange));
+        String sort = sendInfo.getSort(), order = sendInfo.getOrder();
+        Integer dateRange = sendInfo.getDateRange();
+        return sendInfoMapper.selectByExample(createDateRangeExample(SendInfo.class, order, sort, dateRange));
     }
 
-    public int getCount(SendInfo sendInfo){
+    public int getCount(SendInfo sendInfo) {
         return sendInfoMapper.selectCount(sendInfo);
     }
 
@@ -41,13 +41,14 @@ public class SendInfoService extends BaseService{
             sendInfo.setUpdateDate(new Date());
             sendInfoMapper.updateByPrimaryKey(sendInfo);
         } else {
-            Date date=new Date();
+            Date date = new Date();
             sendInfo.setCreateDate(date);
             sendInfo.setUpdateDate(date);
             sendInfoMapper.insert(sendInfo);
         }
     }
-    public SendInfo get(SendInfo sendInfo){
+
+    public SendInfo get(SendInfo sendInfo) {
         return sendInfoMapper.selectOne(sendInfo);
     }
 }

@@ -14,14 +14,14 @@ import java.util.List;
  * @date 2016/12/26 15:05
  */
 @Service
-public class PersonalInfoService extends BaseService{
+public class PersonalInfoService extends BaseService {
     @Autowired
     private PersonalInfoMapper personalInfoMapper;
 
     public List<PersonalInfo> getAll(PersonalInfo personalInfo) {
-        String sort=personalInfo.getSort(),order=personalInfo.getOrder();
-        Integer dateRange=personalInfo.getDateRange();
-        return personalInfoMapper.selectByExample(createDateRangeExample(PersonalInfo.class,order,sort,dateRange));
+        String sort = personalInfo.getSort(), order = personalInfo.getOrder();
+        Integer dateRange = personalInfo.getDateRange();
+        return personalInfoMapper.selectByExample(createDateRangeExample(PersonalInfo.class, order, sort, dateRange));
     }
 
     public PersonalInfo getById(Integer id) {
@@ -33,7 +33,7 @@ public class PersonalInfoService extends BaseService{
     }
 
     public void save(PersonalInfo personalInfo) {
-        Date date=new Date();
+        Date date = new Date();
         personalInfo.setUpdateDate(date);
         if (personalInfo.getId() != null) {
             personalInfoMapper.updateByPrimaryKey(personalInfo);
@@ -42,7 +42,8 @@ public class PersonalInfoService extends BaseService{
             personalInfoMapper.insert(personalInfo);
         }
     }
-    public int getCount(PersonalInfo personalInfo){
+
+    public int getCount(PersonalInfo personalInfo) {
         return personalInfoMapper.selectCount(personalInfo);
     }
 }

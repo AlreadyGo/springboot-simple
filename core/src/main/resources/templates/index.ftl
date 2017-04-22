@@ -48,7 +48,7 @@
     <#if pageInfo??>
         <table class="gridtable" style="width:100%;">
             <tr>
-                <th colspan="2">分页信息 - [<a href="javascript:;" id="list">展开/收缩</a>]</th>
+                <th colspan="2">分页信息 - [<a href="javascript:" id="list">展开/收缩</a>]</th>
             </tr>
             <tr class="pageDetail">
                 <th style="width: 300px;">当前页号</th>
