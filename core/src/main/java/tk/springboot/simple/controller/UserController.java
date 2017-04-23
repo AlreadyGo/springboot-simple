@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseController {
+public class UserController extends GlobalController {
 
     @Autowired
     private UserService userService;

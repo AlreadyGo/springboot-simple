@@ -27,7 +27,7 @@ import static tk.springboot.simple.util.Consts.*;
 
 @RestController
 @RequestMapping("/sendInfo")
-public class SendInfoController extends BaseController {
+public class SendInfoController extends GlobalController {
 
     @Autowired
     private SendInfoService sendInfoService;

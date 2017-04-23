@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import tk.springboot.simple.exceptions.BizException;
 import tk.springboot.simple.model.RespInfo;
@@ -15,14 +16,14 @@ import tk.springboot.simple.util.Consts;
  * @date 2017/1/10 15:29
  * @jdk v1.8
  */
-public class BaseController {
+public class GlobalController {
 
     private Logger logger = Logger.getLogger(this.getClass());
 
     @ExceptionHandler(Exception.class)
     public RespInfo handleIOException(Exception ex) {
         logger.error("inner error:", ex);
-        String message = "内部错误";
+        String message = "系统正忙,稍后再试";
         if (ex instanceof BizException) {
             message = ex.getMessage();
         }

@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
+import org.apache.log4j.Logger;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,8 @@ import java.util.concurrent.TimeUnit;
  * @date 2016/12/29 13:47
  */
 public class CacheUtil {
+    private static Logger logger = Logger.getLogger(CacheUtil.class);
+
     private static Cache<String, Object> cache =
             CacheBuilder
                     .newBuilder()
@@ -22,8 +25,7 @@ public class CacheUtil {
                     .removalListener(new RemovalListener<String, Object>() {
                         @Override
                         public void onRemoval(RemovalNotification<String, Object> rn) {
-                            System.out.println(rn.getKey() + "被移除");
-
+                            logger.info(rn.getKey() + "被移除");
                         }
                     })
                     .build();

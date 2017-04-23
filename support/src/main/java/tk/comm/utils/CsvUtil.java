@@ -2,6 +2,7 @@ package tk.comm.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -11,12 +12,11 @@ import java.util.List;
 
 /**
  * @author zhou
- * @version V1.0
- * @Description:csv解析导出工具类
- * @date 2016/7/28 9:24
+ * @Description:① APP应用异常
+ * @date 2016/7/26 14:51
  */
 public class CsvUtil {
-
+    private static Logger logger=Logger.getLogger(CsvUtil.class);
     public static List<String[]> readCsv(String fileName) throws IOException {
         CSVReader csvReader = new CSVReader(new FileReader(fileName));
         List<String[]> list = csvReader.readAll();
@@ -40,7 +40,7 @@ public class CsvUtil {
             data.add(new String[]{"1", "2", "3"});
             writeCsv("d:\\1.csv", data);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }

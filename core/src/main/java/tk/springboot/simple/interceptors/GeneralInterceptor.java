@@ -54,7 +54,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
                     try {
                         return URLDecoder.decode(sss[1], "utf-8");
                     } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                       logger.error(e);
                     }
                 }
             }

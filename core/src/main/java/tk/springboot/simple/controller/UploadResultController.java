@@ -19,7 +19,7 @@ import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
 @RequestMapping("/uploadResult")
-public class UploadResultController extends BaseController {
+public class UploadResultController extends GlobalController {
 
     @Autowired
     private UploadResultService uploadResultService;

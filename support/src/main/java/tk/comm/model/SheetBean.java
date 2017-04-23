@@ -3,12 +3,9 @@ package tk.comm.model;
 import java.util.List;
 
 /**
- * @author dell
- * @version V1.0
- * @Description:
- * @date 2016/7/27 9:37
- * @jdk v1.7
- * @tomcat v7.0
+ * @author zhou
+ * @Description:① APP应用异常
+ * @date 2016/7/26 14:51
  */
 public class SheetBean {
     private Integer sheetNo;//sheet序号

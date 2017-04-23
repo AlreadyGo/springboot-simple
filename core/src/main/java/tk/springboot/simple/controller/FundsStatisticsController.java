@@ -11,7 +11,7 @@ import tk.springboot.simple.util.Consts;
  */
 @RestController
 @RequestMapping("/fundsStatistics")
-public class FundsStatisticsController extends BaseController {
+public class FundsStatisticsController extends GlobalController {
 
     @Autowired
     private tk.springboot.simple.service.FundsStatisticsInfoService FundsStatisticsInfoService;

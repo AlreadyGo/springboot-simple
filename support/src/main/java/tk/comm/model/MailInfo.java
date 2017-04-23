@@ -5,11 +5,8 @@ import java.util.Date;
 
 /**
  * @author zhou
- * @version V1.0
- * @Description:
- * @date 2016/8/24 15:52
- * @jdk v1.7
- * @tomcat v7.0
+ * @Description:① APP应用异常
+ * @date 2016/7/26 14:51
  */
 public class MailInfo {
     private String[] to;

@@ -2,11 +2,8 @@ package tk.comm.model;
 
 /**
  * @author zhou
- * @version V1.0
- * @Description:
- * @date 2016/8/24 15:59
- * @jdk v1.7
- * @tomcat v7.0
+ * @Description:① APP应用异常
+ * @date 2016/7/26 14:51
  */
 public class MailAuthentication {
     private String emailAccount;

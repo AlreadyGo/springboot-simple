@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
  * @jdk v1.8
  */
 @RestController
-public class LoginController extends BaseController {
+public class LoginController extends GlobalController {
     @Autowired
     private UserService userService;
 

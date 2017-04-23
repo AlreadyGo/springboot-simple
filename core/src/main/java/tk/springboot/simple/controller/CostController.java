@@ -12,7 +12,7 @@ import tk.springboot.simple.util.Consts;
  */
 @RestController
 @RequestMapping("/costMaintainInfo")
-public class CostController extends BaseController {
+public class CostController extends GlobalController {
 
     @Autowired
     private CostInfoService CostInfoService;

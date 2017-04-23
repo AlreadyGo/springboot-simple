@@ -18,7 +18,7 @@ import tk.springboot.simple.util.Consts;
  */
 @RestController
 @RequestMapping("/fundsApp")
-public class FundsAppController extends BaseController {
+public class FundsAppController{
 
     @Autowired
     private CostInfoService costInfoService;

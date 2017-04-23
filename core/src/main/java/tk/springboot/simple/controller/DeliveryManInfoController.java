@@ -26,7 +26,7 @@ import static tk.springboot.simple.util.Consts.*;
 
 @RestController
 @RequestMapping("/deliveryManInfo")
-public class DeliveryManInfoController extends BaseController {
+public class DeliveryManInfoController extends GlobalController {
 
     @Autowired
     private DeliveryManInfoService deliveryManInfoService;

@@ -26,7 +26,7 @@ import static tk.springboot.simple.util.Consts.*;
 
 @RestController
 @RequestMapping("/personalInfo")
-public class PersonalInfoController extends BaseController {
+public class PersonalInfoController extends GlobalController {
 
     @Autowired
     private PersonalInfoService personalInfoService;

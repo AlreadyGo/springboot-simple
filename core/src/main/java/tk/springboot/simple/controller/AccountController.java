@@ -10,7 +10,7 @@ import tk.springboot.simple.util.Consts;
 
 @RestController
 @RequestMapping("/account")
-public class AccountController extends BaseController {
+public class AccountController extends GlobalController {
 
     @Autowired
     private AccountService accountService;

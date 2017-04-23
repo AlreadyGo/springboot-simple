@@ -29,7 +29,7 @@ import static tk.springboot.simple.util.Consts.STATUS_SUCCESS;
 
 @RestController
 @RequestMapping("/orderInfo")
-public class OrderController extends BaseController {
+public class OrderController extends GlobalController {
 
     @Autowired
     private OrderService orderService;
